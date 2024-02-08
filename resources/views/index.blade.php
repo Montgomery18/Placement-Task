@@ -7,12 +7,18 @@
 </head>
 <body>
     <header>
-    
+        <nav>
+            <ul>
+                <li><a href="/Login">Login</a></li>
+                <li><a href="/Register">Register</a></li>
+                <li><a href="/ResetPassRequest">Reset Password Request</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
         <section>
-            
+
         </section>
         <section>
 
@@ -22,6 +28,5 @@
     <footer>
 
     </footer>
-
 </body>
 </html>
