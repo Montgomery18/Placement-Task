@@ -29,6 +29,18 @@ Route::get('/ResetPassRequest', function(){
     return view('ResetPassRequest');
 });
 
+Route::get('/Profile', function(){
+    return view('Profile');
+});
+
+Route::get('/Trends', function(){
+    return view('Trends');
+});
+
+Route::get('/Admin', function(){
+    return view('Admin');
+});
+
 //Route::get('/', function () {
 //    return view('welcome');
 //});
