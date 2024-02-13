@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elanco Animal Tracker</title>
 
-    <link href="{{ asset('css/mobile.css') }}" rel="stylesheet" >
+    <link href="{{ asset('css/desktop.css') }}" rel="stylesheet" >
     <link media="only screen and (min-width:1027px)" href="" rel="stylesheet">
 </head>
 <body>
