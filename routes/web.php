@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ Route::get('/Admin', function(){
 Route::get('/ContactUs', function(){
     return view('ContactUs');
 });
+
+Route::get('/test', [AccountController::class, 'Test']);
 
 //Route::get('/', function () {
 //    return view('welcome');
