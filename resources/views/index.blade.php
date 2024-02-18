@@ -23,6 +23,7 @@
                 <li><a href="/Profile">Profile</a></li>
                 <li><a href="/Trends">Trends</a></li>
                 <li><a href="/Admin">Admin</a></li>
+                <li><a href="/ContactUs">Contact Us</a></li>
             </ul>
         </nav>
     </header>
@@ -37,6 +38,7 @@
     </main>
 
     <footer>
+
 
     </footer>
 </body>

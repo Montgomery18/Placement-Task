@@ -41,6 +41,10 @@ Route::get('/Admin', function(){
     return view('Admin');
 });
 
+Route::get('/ContactUs', function(){
+    return view('ContactUs');
+});
+
 //Route::get('/', function () {
 //    return view('welcome');
 //});
