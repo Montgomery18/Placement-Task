@@ -1,0 +1,26 @@
+header{
+    background-color: #02253E;
+}
+
+.titleHead{
+    display: flex;
+}
+
+.titleHead img{
+    display: inline;
+    max-width: 10%;
+    max-height: 10%;
+}
+
+.titleHead h1{
+    display: inline;
+    flex-grow: 1;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+nav{
+
+}
+

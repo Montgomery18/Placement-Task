@@ -1,2 +1,6 @@
 /* READ ME - This will be for general css, if the css is specific (i.e. its for a graph pages style that differs significantly), it should not be put in here, instead create a new css file */
 /* This (what the read me above mentions) is done to prevent this page becoming hundreds of lines long */
+body{
+    width:100%;
+    margin: 0px;
+}
