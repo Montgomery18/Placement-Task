@@ -22,4 +22,11 @@ class CanineData extends Model
         }
         */
     }
+
+    public function RetrieveDataDB($canineDogDataFrom, $perHour, $perDay){
+        if ($perHour == true){
+            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataFrom);
+            return $canineData;
+        }
+    }
 }

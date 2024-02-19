@@ -63,4 +63,11 @@ class AnimalDataController extends Controller
         */
         //dd($fileDataArray);
     }
+
+    public function DisplayData(Request $request){
+        // write SQLinjection protection here
+        $canineData = new canineData;
+        $canineDataRetrieved = $canineData->RetrieveDataDB($request->input('From'), $request->input('Hour'), $request->input('Day'));
+        return view($request->input('page'), ["data" => $canineDataRetrieved]);
+    }
 }
