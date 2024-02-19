@@ -33,10 +33,15 @@
     <main class = "bg-image bg">
         <section class= "container-overlay">
             <div class= "container-text">
-                  Welcome to the Elanco Activity monitor.
+             <h1>Welcome to the Elanco Activity monitor</h1>
+                <div>
+                 
                   On this website you will be able to view data in graphical form as well as manipulate that data to your needs
                   This data will then provide trends seen in the data and show this either on the graph or in text form.
-                  To get started either login to your account or register for one with the nav bar above. 
+                  <div>
+                    To get started either login to your account or register for one with the nav bar above.
+                  </div>
+                </div>
             </div>
         </section>
         <section>
