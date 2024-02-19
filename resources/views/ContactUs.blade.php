@@ -37,19 +37,46 @@
 
     <main>
         <section>
-           
+           <!DOCTYPE html>
+           <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+            <link href="{{ asset('css/ContactUs.css') }}" rel="stylesheet" >
+           <html>
+              <body>
+                    <h2> Contact number = 01256353131</h2>
+                    <h2> Email=ElancoPartners@elanco.com</h2>
+                    <h2> Office address : Form 2, Bartley Wood, Bartley Wood Business Park, Hook, RG27 9XA</h2>
+
+               <div id="googleMap" style="width:500px;height:500px;margin:auto;"></div>
+
+               <script>
+                   function myMap() {
+                    var mapProp= {
+                    center:new google.maps.LatLng(51.280438,-0.949812),
+                    zoom:20,
+                    };
+
+                   var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+                   var marker = new google.maps.Marker({position: myProp});
+                   animation:google.maps.Animation.BOUNCE
+                   marker.setMap(map);
+                   }
+               </script>
+
+              <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlVrwmx_xztSwSiS_zZQMrNacxEup3UDo&callback=myMap"></script>
+
+            </body>
+            </html>
         </section>
         <section>
 
         </section>
     </main>
+     <link href="{{ asset('css/Footer.css') }}" rel="stylesheet" >
 
+     @include("Footer")
     
-     <footer  class="footer border-top">
-            <div class="container">
-                &copy;
-            </div>
-    </footer>
+   
+   
     
 </body>
 </html>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,10 @@ use App\Http\Controllers\AccountController;
 
 Route::get('/', function(){
     return view('index');
+});
+
+Route::get('/', function(){
+    return view('Footer');
 });
 
 Route::get('/Login', function(){
