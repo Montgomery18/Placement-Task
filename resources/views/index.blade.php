@@ -38,10 +38,14 @@
                  
                   On this website you will be able to view data in graphical form as well as manipulate that data to your needs
                   This data will then provide trends seen in the data and show this either on the graph or in text form.
+<<<<<<< Updated upstream
                   <div>
                     To get started either login to your account or register for one with the nav bar above.
                   </div>
                 </div>
+=======
+                  To get started either login to your account or register for one with the Navigation bar above. 
+>>>>>>> Stashed changes
             </div>
         </section>
         <section>
