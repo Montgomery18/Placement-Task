@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AnimalDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,8 @@ Route::get('/ContactUs', function(){
 });
 
 Route::get('/test', [AccountController::class, 'Test']);
+
+Route::get('/WriteFileDB', [AnimalDataController::class, 'FileDBWrite']);
 
 //Route::get('/', function () {
 //    return view('welcome');
