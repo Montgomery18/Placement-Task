@@ -1,0 +1,34 @@
+
+      
+.bg {
+    background-image: url("../images/LoginBackground.png");
+    height: 100vh;
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.form {
+    margin: 0;
+    position: absolute;
+    top: 70%;
+    left: 80%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Open Sans';
+}
+
+.form_text{
+    font-weight: bold;
+    font-size: large;
+}
+
+.form_button{
+    background-color: #005CA1;
+    color: white;
+    font-family: 'Open Sans';
+    font-weight: bold;
+}
+
+
