@@ -1,0 +1,27 @@
+.bg {
+    background-image: url("../images/Elanco_Index_Background_Image.png");
+    height: 50px;
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    background-size:contain;
+}
+
+.container-overlay{
+    background-color:white;
+    border: solid;
+    border-color: black;
+    border-radius:25px;
+    padding: 2px;
+    height: 300px;
+    width: 300px;
+    position:absolute;
+    left:200px;
+    bottom:75px;
+    opacity: 0.5;
+}
+
+container-text{
+    color:black;
+    text-align:center;
+    bottom:5px;
+}
