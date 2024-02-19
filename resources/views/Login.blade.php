@@ -54,7 +54,7 @@
 
     
      <footer>
-
+     @include("Footer")
 
     </footer>
     
