@@ -40,7 +40,7 @@
     </main>
 
     <footer>
-
+    @include ("Footer")
 
     </footer>
 </body>

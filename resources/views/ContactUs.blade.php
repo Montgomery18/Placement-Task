@@ -71,7 +71,6 @@
 
         </section>
     </main>
-     <link href="{{ asset('css/Footer.css') }}" rel="stylesheet" >
 
      @include("Footer")
     
