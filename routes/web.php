@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AnimalDataController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
