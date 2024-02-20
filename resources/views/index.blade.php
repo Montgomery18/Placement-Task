@@ -23,7 +23,6 @@
             <div class= "container-text">
              <h1>Welcome to the Elanco Activity monitor</h1>
                 <div>
-                 
                   On this website you will be able to view data in graphical form as well as manipulate that data to your needs
                   This data will then provide trends seen in the data and show this either on the graph or in text form.
                   <div>

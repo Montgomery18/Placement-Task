@@ -1,0 +1,28 @@
+form{
+    text-align: center;  
+    border: 1px solid #02253E;
+    border-radius: 8px;
+    padding: 20px; 
+    width: fit-content;
+    height: fit-content; 
+    margin: auto;
+    margin-top: 20vh; 
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+ .delete_button {
+    background-color: #02253E;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    margin-top: 15px; 
+}
