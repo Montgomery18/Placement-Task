@@ -1,0 +1,30 @@
+h2,p{
+    text-align: center;
+    margin-top:4%;
+}
+
+form{
+    text-align: center;  
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.btn {
+    background-color: #02253E;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.form-control {
+    width: 300px; 
+}
+
+
