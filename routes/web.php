@@ -56,7 +56,7 @@ Route::get('/dumpdata', function(){
     return view('dumpdata');
 });
 
-Route::post('/dumpdata', [AnimalDataController::class, 'DisplayData'])->name('login');
+Route::post('/dumpdata', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('login');
 
 //Route::get('/', function () {
 //    return view('welcome');
