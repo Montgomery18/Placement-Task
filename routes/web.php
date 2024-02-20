@@ -64,6 +64,12 @@ Route::get('/test', [AccountController::class, 'Test']);
 
 Route::get('/WriteFileDB', [AnimalDataController::class, 'FileDBWrite']);
 
+Route::get('/dumpdata', function(){
+    return view('dumpdata');
+});
+
+Route::post('/dumpdata', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('login');
+
 //Route::get('/', function () {
 //    return view('welcome');
 //});
