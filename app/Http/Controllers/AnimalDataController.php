@@ -64,17 +64,17 @@ class AnimalDataController extends Controller
         }
         */
     }
-    public function DisplayData($Page, $DogID, $DateMin, $DateMax, $DateAll, $HourMode, $DayMode){
+    public function DisplayData($DogID, $HourMode, $DayMode){
         // Don't believe this requires SQLinjection, its the intial display of data
         $canineData = new canineData;
-        $canineDataRetrieved = $canineData->RetrieveDataDB($DogID, $DateMin, $DateMax, $DateAll, $HourMode, $DayMode);
-        return view($Page, ["data" => $canineDataRetrieved]);
+        $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($DogID, $DateMin, $DateMax, $DateAll, $HourMode, $DayMode);
+        return $canineDataRetrieved;
     }
 
     public function DisplayDataRangeFiltered(Request $request){
         // write SQLinjection protection here
         $canineData = new canineData;
-        $canineDataRetrieved = $canineData->RetrieveDataDB($request->input('DogID'), $request->input('DateMin'), $request->input('DateMax'), $request->input('HourMode'), $request->input('DayMode'));
+        $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DateMin'), $request->input('DateMax'), $request->input('HourMode'), $request->input('DayMode'));
         return view($request->input('page'), ["data" => $canineDataRetrieved]);
     }
 }
