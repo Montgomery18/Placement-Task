@@ -20,6 +20,10 @@ Route::get('/', function(){
     return view('index');
 });
 
+Route::get('/Placeholder', function(){
+    return view('Placeholder');
+});
+
 Route::get('/Login', function(){
     return view('Login');
 });
