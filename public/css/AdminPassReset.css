@@ -1,0 +1,27 @@
+table, th, td {
+    border: 1px solid;
+  }
+
+table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    margin-top: 60px;
+  }
+
+  th {
+    background-color: #02253E;;
+    color: white;
+  }
+
+  td button.view_button,td button.accept_button,td button.decline_button {
+    background-color: #02253E;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+}

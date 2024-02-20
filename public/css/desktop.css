@@ -1,6 +1,14 @@
 /* READ ME - This will be for general css, if the css is specific (i.e. its for a graph pages style that differs significantly), it should not be put in here, instead create a new css file */
 /* This (what the read me above mentions) is done to prevent this page becoming hundreds of lines long */
+
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+
 body{
     width:100%;
     margin: 0px;
+
+    font-family: 'OpenSans', sans-serif;    
 }
