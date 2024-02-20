@@ -1,0 +1,16 @@
+table, th, td {
+    border: 1px solid;
+  }
+
+table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    margin-top: 60px;
+  }
+
+  th {
+    background-color: #02253E;;
+    color: white;
+  }

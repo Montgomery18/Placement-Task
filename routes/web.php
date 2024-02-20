@@ -48,6 +48,10 @@ Route::get('/ContactUs', function(){
     return view('ContactUs');
 });
 
+Route::get('/AdminPassReset', function(){
+    return view('AdminPassReset');
+});
+
 Route::get('/test', [AccountController::class, 'Test']);
 
 Route::get('/WriteFileDB', [AnimalDataController::class, 'FileDBWrite']);
