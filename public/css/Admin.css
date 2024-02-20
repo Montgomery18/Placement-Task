@@ -1,0 +1,12 @@
+a:link, a:visited {
+    text-decoration: none;
+    color: #02253E;
+  }
+  
+  ul#admin_list {
+    list-style-type: none;
+    margin-top: 20px;
+  }
+  a:hover {
+    color: red;
+  }

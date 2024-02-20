@@ -20,6 +20,10 @@ Route::get('/', function(){
     return view('index');
 });
 
+Route::get('/Placeholder', function(){
+    return view('Placeholder');
+});
+
 Route::get('/Login', function(){
     return view('Login');
 });
@@ -48,6 +52,14 @@ Route::get('/Admin', function(){
 
 Route::get('/ContactUs', function(){
     return view('ContactUs');
+});
+
+Route::get('/AdminPassReset', function(){
+    return view('AdminPassReset');
+});
+
+Route::get('/AdminDeleteUser', function(){
+    return view('AdminDeleteUser');
 });
 
 Route::get('/test', [AccountController::class, 'Test']);

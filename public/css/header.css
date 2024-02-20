@@ -1,3 +1,5 @@
+
+
 header{
     display: flex;
     flex-direction: row;
@@ -22,6 +24,8 @@ header a:active{
    color: #fff;
 }
 
+
+/* Left Head Css */
 #LeftHead{
     display: flex;
     flex-direction: column;
@@ -29,7 +33,7 @@ header a:active{
     width: 5%;
 }
 
-#LeftHead img{
+#LeftHead img #logo{
     max-width: 100%;
     max-height: auto;
 }
@@ -37,6 +41,14 @@ header a:active{
 #LeftHead p{
     text-align: center;
 }
+
+#LeftHead #ProfilePicture
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Right Head CSS */
 
 #RightHead{
     display: flex;
@@ -63,4 +75,59 @@ header a:active{
     justify-content: space-evenly;
     list-style: none;
     padding: 0px;
+}
+
+
+/* Sidebar CSS */
+
+
+.navbars
+{
+    position: relative;
+    height: 100%;   
+}
+
+.Sidebar
+{
+    position: absolute;
+    height: 100vh;
+    width: 0;
+    top:0;
+    left:0;
+    background-color: rgb(33, 112, 184);
+    z-index: 1;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+
+#LoggedOutSidebar
+{
+    width: 0;
+}
+
+.Sidebar ul
+{
+    list-style: none;
+    
+}
+
+.Sidebar ul > li
+{
+    padding: 0px 0px 32px 0px;
+    
+}
+
+.Sidebar ul > li > a
+{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+.Sidebar ul > li > .CloseButton
+{
+    position: absolute;
+    right: 25px;
+    font-size: 40px;
 }
