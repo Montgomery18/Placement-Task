@@ -2,7 +2,6 @@
 
     
     <footer  class="border-top footer text-muted">
-
             <div class="container">
                <a href = "https://twitter.com/elanco?lang=en-GB">
                      <img src="{{ asset('images/Twitter_Logo.png') }}">
