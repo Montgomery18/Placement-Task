@@ -1,22 +1,32 @@
 .footer {
-    bottom: 0;
+    bottom:0;
     width: 100%;
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
-    color: rgb(21, 49, 144);
+    background-color: #02253E;
+    margin-top:auto;
+    
+   
 }
-html {
-    font-size: 14px;
+main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+h3{
+    color:white;
+    font-size:12px;
+    text-align:center;
+}
+h5{
+    color:white;
+    font-size:12px;
+    text-align: center;
 }
 
 .border-top {
-    border-top: 50px ;
+    border-top: 50px;
+   
 }
 
 .border-bottom {
@@ -24,7 +34,7 @@ html {
 }
 
 .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem blue;
 }
 
 button.accept-policy {
@@ -33,4 +43,5 @@ button.accept-policy {
 }
 .container {
     min-height: 100%;
+    text-align:center;
 }
