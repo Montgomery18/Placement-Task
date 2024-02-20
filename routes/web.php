@@ -32,6 +32,8 @@ Route::get('/Register', function(){
     return view('Register');
 });
 
+Route::post('/views', [AccountController::class, 'add'])->name('views.add');
+
 Route::get('/ResetPassRequest', function(){
     return view('ResetPassRequest');
 });

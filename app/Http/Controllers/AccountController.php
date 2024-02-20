@@ -11,4 +11,24 @@ class AccountController extends Controller
         $account = Account::all();
         dd($account);
     }
+
+     public function Register()
+    {
+        return view('views.Register');
+    }
+
+    public function add(Request $request){
+
+        $newAccount= new Account;
+
+        $newAccount->Username= $request->username;
+
+        $newAccount->Password= $request->passw;
+
+        $newAccount->save();
+
+        return view('/index');
+    }
+
+   
 }
