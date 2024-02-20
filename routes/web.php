@@ -52,6 +52,10 @@ Route::get('/AdminPassReset', function(){
     return view('AdminPassReset');
 });
 
+Route::get('/AdminDeleteUser', function(){
+    return view('AdminDeleteUser');
+});
+
 Route::get('/test', [AccountController::class, 'Test']);
 
 Route::get('/WriteFileDB', [AnimalDataController::class, 'FileDBWrite']);
