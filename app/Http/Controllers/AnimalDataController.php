@@ -67,7 +67,7 @@ class AnimalDataController extends Controller
     public function DisplayData(Request $request){
         // write SQLinjection protection here
         $canineData = new canineData;
-        $canineDataRetrieved = $canineData->RetrieveDataDB($request->input('From'), $request->input('Hour'), $request->input('Day'));
+        $canineDataRetrieved = $canineData->RetrieveDataDB($request->input('DogID'), $request->input('IDMin'), $request->input('IDMax'), $request->input('HourMode'), $request->input('DayMode'));
         return view($request->input('page'), ["data" => $canineDataRetrieved]);
     }
 }

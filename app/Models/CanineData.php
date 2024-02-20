@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CanineData extends Model
 {
@@ -23,9 +24,11 @@ class CanineData extends Model
         */
     }
 
-    public function RetrieveDataDB($canineDogDataFrom, $perHour, $perDay){
+    public function RetrieveDataDB($canineDogDataFrom, $IDMin, $IDMax, $perHour, $perDay){
         if ($perHour == true){
-            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataFrom);
+            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataFrom)->where("CanineID",">=", $IDMin)->where("CanineID","<=", $IDMax)->get();
+            $lastID = $canineData->last();
+            //session(['ID' => $lastID->CanineID]);
             return $canineData;
         }
     }
