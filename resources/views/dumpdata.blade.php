@@ -12,6 +12,7 @@
         <input type="text" name="DateMin" value="2021-01-01">
         <input type="text" name="DateMax" value="2021-01-02">
         <input type="text" name="DogID" value="CANINE001">
+        <input type="text" name="DisplayAll" value="true">
         <input type="text" name="HourMode" value="false">
         <input type="text" name="DayMode" value="true">
         <button type="submit">test</button>
