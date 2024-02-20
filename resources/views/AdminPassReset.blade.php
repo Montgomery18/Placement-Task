@@ -42,7 +42,11 @@
     <td>1</td>
     <td>Example1</td>
     <td>Example1@gmail.com</td>
-    <td><button type="view_button">View</button><button type="accept_button">Accept</button><button type="decline_button">Decline</button></td>
+    <td>
+    <button type="button" class="view_button">View</button>
+    <button type="button" class="accept_button">Accept</button>
+    <button type="button" class="decline_button">Decline</button>
+    </td>  
   </tr>
   <tr>
 </table>
