@@ -26,13 +26,13 @@ class CanineData extends Model
 
     public function RetrieveData($DogID, $displayAll, $perHour, $perDay){
         if ($perHour == "true" && $displayAll == "false"){
-            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->get();
+            $canineData = DB::table('Canine_Data')->where('DogID','=', $DogID)->get();
             $lastID = $canineData->last();
             return $canineData;
         }
         else if ($perDay == "true" && $displayAll == "false"){
             $thisModel = new CanineData();
-            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->get();
+            $canineData = DB::table('Canine_Data')->where('DogID','=', $DogID)->get();
             $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
