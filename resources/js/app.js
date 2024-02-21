@@ -1,5 +1,5 @@
 import './bootstrap';
-import './myChart'
 import './nav';
+import './myChart'
 import jQuery from 'jquery';
 window.$ = jQuery;
