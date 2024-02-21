@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
+    protected $fillable = ['AccountID', 'email', 'password', 'Access_Level'];
     use HasFactory;
     protected $table = 'Account';
     public $timestamps = false;

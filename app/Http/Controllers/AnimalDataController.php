@@ -22,10 +22,19 @@ class AnimalDataController extends Controller
                 $count = 0;
             }
             $indivData = explode(",", $indivData);
+            $dateArray = explode("-", $indivData[2]);
+            $date = ($dateArray[2] . "-" . $dateArray[1] . "-" . $dateArray[0]);
+            $i = 0;
+            foreach($indivData as $attribute){
+                if ($attribute == null){
+                    $indivData[$i];
+                }
+                $i++;
+            }
             $arrayInsertSub = [
                 "DogID" => $indivData[0],
                 "Weight" => $indivData[1],
-                "Date" => $indivData[2],
+                "Date" => $date,
                 "Hour" => $indivData[3],
                 "Behaviour" => $indivData[4],
                 "Activity_Level" => $indivData[5],
@@ -61,6 +70,18 @@ class AnimalDataController extends Controller
             $canineData->save();
         }
         */
-        //dd($fileDataArray);
+    }
+    public function DisplayData($DogID, $displayAll ,$HourMode, $DayMode){
+        // Don't believe this requires SQLinjection, its the intial display of data
+        $canineData = new canineData;
+        $canineDataRetrieved = $canineData->RetrieveData($DogID, $displayAll, $HourMode, $DayMode);
+        return $canineDataRetrieved;
+    }
+
+    public function DisplayDataRangeFiltered(Request $request){
+        // write SQLinjection protection here
+        $canineData = new canineData;
+        $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), $request->input('DateMax'), $request->input('HourMode'), $request->input('DayMode'));
+        return view($request->input('page'), ["data" => $canineDataRetrieved]);
     }
 }

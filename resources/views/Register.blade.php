@@ -10,16 +10,19 @@
     <title>Register</title>
 </head>
 <body>
+
     
     @include("Header")
+
 
     
     <main class="bg-image bg">
         <section class="form-group float-right">
-            <form class="form was-validated" action="" method="post">
+            <form class="form was-validated" action="{{route('views.add')}}" method="post">
+                @csrf
                 <div>
                     <label for="email" class="form_text">Email</label><br>
-                    <input class="form-control" type="text" id="email" name="email" placeholder="example@email.com" required>
+                    <input class="form-control" type="text" id="username" name="username" placeholder="example@email.com" required>
                     <div class="invalid-feedback">Please fill out this field.</div>
                     <br>
                     <label for="passw" class="form_text">Password</label><br>
@@ -34,12 +37,13 @@
 
         </section>
     </main>
-
+  
     
      <footer>
-
+     @include ("Footer")
 
     </footer>
     
 </body>
 </html>
+

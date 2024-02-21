@@ -32,6 +32,8 @@ Route::get('/Register', function(){
     return view('Register');
 });
 
+Route::post('/views', [AccountController::class, 'add'])->name('views.add');
+
 Route::get('/ResetPassRequest', function(){
     return view('ResetPassRequest');
 });
@@ -41,7 +43,9 @@ Route::get('/Profile', function(){
 });
 
 Route::get('/Trends', function(){
-    return view('Trends');
+    $animalCont = new AnimalDataController();
+    $graphData = $animalCont->DisplayData("CANINE001", "true", "false", "true");
+    return view('Trends', ["data" => $graphData]);
 });
 
 Route::get('/Admin', function(){
@@ -63,6 +67,12 @@ Route::get('/AdminDeleteUser', function(){
 Route::get('/test', [AccountController::class, 'Test']);
 
 Route::get('/WriteFileDB', [AnimalDataController::class, 'FileDBWrite']);
+
+Route::get('/dumpdata', function(){
+    return view('dumpdata');
+});
+
+Route::post('/dumpdata', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('login');
 
 //Route::get('/', function () {
 //    return view('welcome');
