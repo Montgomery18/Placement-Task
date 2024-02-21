@@ -1,5 +1,3 @@
-
-
 CheckForTrendsPage();
 
 function CheckForTrendsPage()
@@ -9,6 +7,7 @@ function CheckForTrendsPage()
 
     if (bodyTags[0].classList.contains('TrendsPage'))
     {
+        console.log("Test");
         StartChart();
     }
 }
@@ -16,14 +15,20 @@ function CheckForTrendsPage()
 
 function StartChart()
 {
-    console.log("START CHART");
+    var weight = [];
+    var dates = [];
+    window.data.forEach(getWeight);
+    function getWeight(item){
+        weight.push(item.Weight);
+        dates.push(item.Date);
+    }
 
-    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-    const yValues = [55, 49, 44, 24, 15];
-    const barColors = ["red", "green","blue","orange","brown"];
-    
+    const xValues = dates;
+    const yValues = weight;
+    const barColors = "blue";
+
     new Chart("myChart", {
-    type: "bar",
+    type: "line",
     data: {
         labels: xValues,
         datasets: [{
@@ -39,31 +44,26 @@ function StartChart()
         }
     }
     });
-    
-    var start = document.getElementById('start');
+
+    /*var start = document.getElementById('start');
     var end = document.getElementById('end');
-    var day = document.getElementById('day')
-    
+    var day_mode = document.getElementById('day_mode')
+
     start.addEventListener('change', function() {
         if (start.value)
             end.min = start.value;
     }, false);
-    
+
     end.addEventListener('change', function() {
         if (end.value)
             start.max = end.value;
     }, false);
-    
-    day.addEventListener('click', function(){
+
+    day_mode.addEventListener('click', function(){
         var x = document.getElementById('end_div');
         if(x.hidden)
             x.hidden = false;
         else
             x.hidden = true;
-    })
-
-    console.log("START CHART");
+    })*/
 }
-
-
-
