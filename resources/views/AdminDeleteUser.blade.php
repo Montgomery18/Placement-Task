@@ -31,8 +31,9 @@
     </header>
     <main>
         <section>
-        <form action="">
-            <input type="text" id="userID" name="userID" placeholder= "Enter User ID" ><br>
+        <form class="form was-validated" action="{{route('views.delete')}}" method="post">
+             @csrf
+            <input type="text" id="username" name="username" placeholder= "Enter User ID" ><br>
             <input class="delete_button" type="submit" value="Delete">
         </form>
         </section>
