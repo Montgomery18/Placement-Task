@@ -36,6 +36,7 @@ Route::post('/views/add', [AccountController::class, 'add'])->name('views.add');
 
 Route::post('/views/delete', [AccountController::class, 'delete'])->name('views.delete');
 
+Route::post('/login', [AccountController::class, 'loginPost'])->name('login1');
 
 Route::get('/ResetPassRequest', function(){
     return view('ResetPassRequest');
