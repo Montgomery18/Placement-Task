@@ -24,42 +24,98 @@ class CanineData extends Model
         */
     }
 
-    public function RetrieveData($DogID, $perHour, $perDay){
-        if ($perHour == "true"){
+    public function RetrieveData($DogID, $displayAll, $perHour, $perDay){
+        if ($perHour == "true" && $displayAll == "false"){
             $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->get();
             $lastID = $canineData->last();
             return $canineData;
         }
-        else if ($perDay == "true"){
+        else if ($perDay == "true" && $displayAll == "false"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->get();
-            $canineDataAveraged = $thisModel->AverageData($canineData);
+            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
-    }
-
-    public function RetrieveDataDateFiltered($canineDogDataName, $DateMin, $DateMax, $DateAll, $perHour, $perDay){
-        if ($perHour == "true"){
-            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$DateMin, $DateMax])->get();
-            $lastID = $canineData->last();
+        else if ($perHour == "true" && $displayAll == "true"){
+            $canineData = DB::table('Canine_Data')->get();
             return $canineData;
         }
-        else if ($perDay == "true"){
+        else if ($perDay == "true" && $displayAll == "true"){
             $thisModel = new CanineData();
-            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$DateMin, $DateMax])->get();
-            $canineDataAveraged = $thisModel->AverageData($canineData);
+            $canineData = DB::table('Canine_Data')->get();
+            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
     }
 
-    public function AverageData($dataToAverage){
+    public function RetrieveDataDateFiltered($canineDogDataName, $displayAll, $DateMin, $DateMax, $perHour, $perDay){
+        if ($perHour == "true" && $displayAll == "false"){
+            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$DateMin, $DateMax])->get();
+            return $canineData;
+        }
+        else if ($perDay == "true" && $displayAll == "false"){
+            $thisModel = new CanineData();
+            $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$DateMin, $DateMax])->get();
+            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            return $canineDataAveraged;
+        }
+        else if ($perHour == "true" && $displayAll == "true"){
+            $canineData = DB::table('Canine_Data')->whereBetween("Date", [$DateMin, $DateMax])->get();
+            return $canineData;
+        }
+        else if ($perDay == "true" && $displayAll == "true"){
+            $thisModel = new CanineData();
+            $canineData = DB::table('Canine_Data')->whereBetween("Date", [$DateMin, $DateMax])->get();
+            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            return $canineDataAveraged;
+        }
+    }
+
+    public function AverageData($dataToAverage, $displayAll){
+        $array = [];
+        $DogName = "";
+        $Date = "";
+        $UsedDates = "";
+        for($i = 0; $i < count($dataToAverage); $i++){
+            $object = new \stdClass();
+            if ($displayAll == false){
+                if ($Date != $dataToAverage[$i]->Date || $DogName == "" || $Date == ""){
+                    $DogName = $dataToAverage[$i]->DogID;
+                    $Date = $dataToAverage[$i]->Date;
+                    $object->DogName = $DogName;
+                    $object->Date = $Date;
+                    $array[] = $object;
+                }
+            }
+            else{
+                if ($Date != $dataToAverage[$i]->Date && $UsedDates != $dataToAverage[$i]->Date || $Date == ""){
+                    $UsedDates = $Date;
+                    $Date = $dataToAverage[$i]->Date;
+                    $object->Date = $Date;
+                    $array[] = $object;
+                }
+            }
+        }
+
         $averageDataArray = [];
-        for($i = 0; $i < count($dataToAverage); $i){
+        for($i = 0; $i < count($array); $i++){
             $averagedDataObject = new \stdClass();
             $tempArray = [0,0,0,0,0,0,0,0];
-            if ($i == 0){
-                for ($a = 0; $a < 24; $a++){
-                    if (isset($dataToAverage[$a])){
+            for ($a = 0; $a < count($dataToAverage); $a++){
+                if ($displayAll == false){
+                    if ($dataToAverage[$a]->DogID == $array[$i]->DogName && $dataToAverage[$a]->Date == $array[$i]->Date){
+                        $tempArray[0] += $dataToAverage[$a]->Weight;
+                        $tempArray[1] += $dataToAverage[$a]->Activity_Level;
+                        $tempArray[2] += $dataToAverage[$a]->Heart_Rate;
+                        $tempArray[3] += $dataToAverage[$a]->Calorie_Burn;
+                        $tempArray[4] += $dataToAverage[$a]->Temperature;
+                        $tempArray[5] += $dataToAverage[$a]->Food_Intake;
+                        $tempArray[6] += $dataToAverage[$a]->Water_Intake;
+                        $tempArray[7] += $dataToAverage[$a]->Breathing_Rate;
+                    }
+                }
+                else{
+                    if ($dataToAverage[$a]->Date == $array[$i]->Date){
                         $tempArray[0] += $dataToAverage[$a]->Weight;
                         $tempArray[1] += $dataToAverage[$a]->Activity_Level;
                         $tempArray[2] += $dataToAverage[$a]->Heart_Rate;
@@ -71,35 +127,126 @@ class CanineData extends Model
                     }
                 }
             }
+            if ($displayAll == false){
+                //$averagedDataObject->CanineID = 
+                //$averagedDataObject->OwnerID = 
+                $averagedDataObject->DogID = $array[$i]->DogName;
+                $averagedDataObject->Date = $array[$i]->Date;
+                $averagedDataObject->Weight = $tempArray[0] / 24;
+                $averagedDataObject->Activity_Level = $tempArray[1] / 24;
+                $averagedDataObject->Heart_Rate = $tempArray[2] / 24;
+                $averagedDataObject->Calorie_Burn = $tempArray[3] / 24;
+                $averagedDataObject->Temperature = $tempArray[4] / 24;
+                $averagedDataObject->Food_Intake = $tempArray[5] / 24;
+                $averagedDataObject->Water_Intake = $tempArray[6] / 24;
+                $averagedDataObject->Breathing_Rate = $tempArray[7] / 24;
+                $averageDataArray[] = $averagedDataObject;
+            }
             else{
-                for ($a = 0; $a < $i + 24; $a++){
-                    if (isset($dataToAverage[$a])){
-                        $tempArray[0] = $tempArray[0] + $dataToAverage[$a]->Weight;
-                        $tempArray[1] += $dataToAverage[$a]->Activity_Level;
-                        $tempArray[2] += $dataToAverage[$a]->Heart_Rate;
-                        $tempArray[3] += $dataToAverage[$a]->Calorie_Burn;
+                //$averagedDataObject->CanineID =
+                //$averagedDataObject->OwnerID =
+                $averagedDataObject->Date = $array[$i]->Date;
+                $averagedDataObject->Weight = $tempArray[0] / 72;
+                $averagedDataObject->Activity_Level = $tempArray[1] / 72;
+                $averagedDataObject->Heart_Rate = $tempArray[2] / 72;
+                $averagedDataObject->Calorie_Burn = $tempArray[3] / 72;
+                $averagedDataObject->Temperature = $tempArray[4] / 72;
+                $averagedDataObject->Food_Intake = $tempArray[5] / 72;
+                $averagedDataObject->Water_Intake = $tempArray[6] / 72;
+                $averagedDataObject->Breathing_Rate = $tempArray[7] / 72;
+                $averageDataArray[] = $averagedDataObject;
+            }
+        }
+        return($averageDataArray);
+        
+        /*
+        $averageDataArray = [];
+        $DogName = "";
+        $Date = "";
+        $count = -1;
+        for($i = 0; $i < count($dataToAverage); $i){
+            if ($displayAll == true){
+                if ($DogName != $dataToAverage[$i]->DogID && $DogName != ""){
+                    $count++;
+                }
+                else if ($Date == $dataToAverage[$i]->Date && $Date != ""){
+                    $count--;
+                }
+                $DogName = $dataToAverage[$i]->DogID;
+                $Date = $dataToAverage[$i]->Date;
+            }
+            $averagedDataObject = new \stdClass();
+            $tempArray = [0,0,0,0,0,0,0,0];
+            for ($a = $dataToAverage[$i]->CanineID; $a < $dataToAverage[24]->CanineID * 2; $a++){ // goes over this one to many times
+                if (isset($dataToAverage[$a])){
+                    $tempArray[0] += $dataToAverage[$a]->Weight;
+                    $tempArray[1] += $dataToAverage[$a]->Activity_Level;
+                    $tempArray[2] += $dataToAverage[$a]->Heart_Rate;
+                    $tempArray[3] += $dataToAverage[$a]->Calorie_Burn;
+                    try{
                         $tempArray[4] += $dataToAverage[$a]->Temperature;
-                        $tempArray[5] += $dataToAverage[$a]->Food_Intake;
-                        $tempArray[6] += $dataToAverage[$a]->Water_Intake;
-                        $tempArray[7] += $dataToAverage[$a]->Breathing_Rate;
                     }
+                    catch(\Error $e){
+                        return dd($dataToAverage[$a]);
+                    }
+                    $tempArray[5] += $dataToAverage[$a]->Food_Intake;
+                    $tempArray[6] += $dataToAverage[$a]->Water_Intake;
+                    $tempArray[7] += $dataToAverage[$a]->Breathing_Rate;
                 }
             }
-            $averagedDataObject->CanineID = $dataToAverage[$i]->CanineID; // first time around $IDStartNext is zero
-            $averagedDataObject->OwnerID = $dataToAverage[$i]->OwnerID;
-            $averagedDataObject->Date = $dataToAverage[$i]->Date;
-            $averagedDataObject->Weight = $tempArray[0] / 24;
-            $averagedDataObject->Activity_Level = $tempArray[1] / 24;
-            $averagedDataObject->Heart_Rate = $tempArray[2] / 24;
-            $averagedDataObject->Calorie_Burn = $tempArray[3] / 24;
-            $averagedDataObject->Temperature = $tempArray[4] / 24;
-            $averagedDataObject->Food_Intake = $tempArray[5] / 24;
-            $averagedDataObject->Water_Intake = $tempArray[6] / 24;
-            $averagedDataObject->Breathing_Rate = $tempArray[7] / 24;
-            $averageDataArray[] = $averagedDataObject;
+            if ($displayAll == false){
+                dd($tempArray);
+                $averagedDataObject->CanineID = $dataToAverage[$i]->CanineID;
+                $averagedDataObject->OwnerID = $dataToAverage[$i]->OwnerID;
+                $averagedDataObject->DogID = $dataToAverage[$i]->DogID;
+                $averagedDataObject->Date = $dataToAverage[$i]->Date;
+                $averagedDataObject->Weight = $tempArray[0] / 24;
+                $averagedDataObject->Activity_Level = $tempArray[1] / 24;
+                $averagedDataObject->Heart_Rate = $tempArray[2] / 24;
+                $averagedDataObject->Calorie_Burn = $tempArray[3] / 24;
+                $averagedDataObject->Temperature = $tempArray[4] / 24;
+                $averagedDataObject->Food_Intake = $tempArray[5] / 24;
+                $averagedDataObject->Water_Intake = $tempArray[6] / 24;
+                $averagedDataObject->Breathing_Rate = $tempArray[7] / 24;
+                $averageDataArray[] = $averagedDataObject;
+            }
+            else if ($displayAll == true){
+                if ($count >= 0){
+                    if ($i > 24 * 2){
+                        dd($averageDataArray);
+                    }
+                    $averageDataArray[$count]->Weight += $tempArray[0];
+                    $averageDataArray[$count]->Activity_Level += $tempArray[1];
+                    $averageDataArray[$count]->Heart_Rate += $tempArray[2];
+                    $averageDataArray[$count]->Calorie_Burn += $tempArray[3];
+                    $averageDataArray[$count]->Temperature += $tempArray[4];
+                    $averageDataArray[$count]->Food_Intake += $tempArray[5];
+                    $averageDataArray[$count]->Water_Intake += $tempArray[6];
+                    $averageDataArray[$count]->Breathing_Rate += $tempArray[7];
+                    if ($i > 24 * 3){
+                        dd($averageDataArray);
+                    }
+                }
+                else{
+                    $averagedDataObject->CanineID = $dataToAverage[$i]->CanineID;
+                    $averagedDataObject->OwnerID = $dataToAverage[$i]->OwnerID;
+                    $averagedDataObject->DogID = $dataToAverage[$i]->DogID;
+                    $averagedDataObject->Date = $dataToAverage[$i]->Date;
+                    $averagedDataObject->Weight = $tempArray[0];
+                    $averagedDataObject->Activity_Level = $tempArray[1];
+                    $averagedDataObject->Heart_Rate = $tempArray[2];
+                    $averagedDataObject->Calorie_Burn = $tempArray[3];
+                    $averagedDataObject->Temperature = $tempArray[4];
+                    $averagedDataObject->Food_Intake = $tempArray[5];
+                    $averagedDataObject->Water_Intake = $tempArray[6];
+                    $averagedDataObject->Breathing_Rate = $tempArray[7];
+                    $averageDataArray[] = $averagedDataObject;
+                }
+            }
             $i += 24;
         }
-        return $averageDataArray;
+        return dd($averageDataArray);
+        */
     }
     //CANINE001 - don't need to average this
     //7.2
