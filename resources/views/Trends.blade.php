@@ -26,21 +26,26 @@
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="day_mode" name="day_mode" value="yes">
                 </div>
-                <form id="day_form">
+                <form id="day_form" style="display:block">
                     <div class="row">
                         <div class="col">
-                            <select class="form-select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                            <select id="day_form_select" class="form-select">
+                                <option value="Weight">Weight</option>
+                                <option value="Activity_Level">Steps</option>
+                                <option value="Heart_Rate">Heart Rate</option>
+                                <option value="Calorie_Burn">Calories Burned</option>
+                                <option value="Temperature">Temperature</option>
+                                <option value="Food_Intake">Calories Consumed</option>
+                                <option value="Water_Intake">Water Consumed</option>
+                                <option value="Breathing_Rate">Breathing Rate</option>
+                                <option value="Barking Frequency">Barking Frequency</option>
                             </select>
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control">
+                            <input id="start" type="date" class="form-control">
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control">
+                            <input id="end" type="date" class="form-control">
                         </div>
                         <div class="col">
                             <input type="submit" class="form-control">
@@ -51,10 +56,15 @@
                     <div class="row">
                         <div class="col">
                             <select class="form-select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                                <option value="Weight">Weight</option>
+                                <option value="Activity_Level">Steps</option>
+                                <option value="Heart_Rate">Heart Rate</option>
+                                <option value="Calorie_Burn">Calories Burned</option>
+                                <option value="Temperature">Temperature</option>
+                                <option value="Food_Intake">Calories Consumed</option>
+                                <option value="Water_Intake">Water Consumed</option>
+                                <option value="Breathing_Rate">Breathing Rate</option>
+                                <option value="Barking Frequency">Barking Frequency</option>
                             </select>
                         </div>
                         <div class="col">
