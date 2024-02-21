@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/Trends.css') }}" rel="stylesheet" >
     <link href="{{ asset('css/Header.css') }}" rel="stylesheet" >
+    @vite(['resources/js/app.js'])
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <title>Trends</title>
 </head>
@@ -32,7 +34,17 @@
 
     <main>
         <section>
-
+            <div style="width:600px">
+                <canvas id="myChart"></canvas>
+                <button type="button">
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
         </section>
         <section>
 
