@@ -44,7 +44,7 @@ Route::get('/Profile', function(){
 
 Route::get('/Trends', function(){
     $animalCont = new AnimalDataController();
-    $graphData = $animalCont->DisplayData("CANINE001", "true", "false", "true");
+    $animalCont->DisplayData("CANINE001", "false", "false", "true");
     return view('Trends', ["data" => $graphData]);
 });
 
