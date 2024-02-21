@@ -30,5 +30,18 @@ class AccountController extends Controller
         return view('/index');
     }
 
-   
+   public function delete(Request $request)
+   {
+       $userId=$request -> username;
+      
+       $user = Account::where('Username', $userId)->first();
+ 
+       if ($user) {
+           $user->delete($user);
+           return view ('/index');
+        } else {
+            echo ("no work");
+        }
+ 
+   }
 }

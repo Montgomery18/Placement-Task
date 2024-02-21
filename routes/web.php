@@ -34,6 +34,9 @@ Route::get('/Register', function(){
 
 Route::post('/views', [AccountController::class, 'add'])->name('views.add');
 
+Route::post('/views', [AccountController::class, 'delete'])->name('views.delete');
+
+
 Route::get('/ResetPassRequest', function(){
     return view('ResetPassRequest');
 });
