@@ -78,7 +78,7 @@ class CanineData extends Model
         $UsedDates = "";
         for($i = 0; $i < count($dataToAverage); $i++){
             $object = new \stdClass();
-            if ($displayAll == false){
+            if ($displayAll == "false"){
                 if ($Date != $dataToAverage[$i]->Date || $DogName == "" || $Date == ""){
                     $DogName = $dataToAverage[$i]->DogID;
                     $Date = $dataToAverage[$i]->Date;
@@ -102,7 +102,7 @@ class CanineData extends Model
             $averagedDataObject = new \stdClass();
             $tempArray = [0,0,0,0,0,0,0,0];
             for ($a = 0; $a < count($dataToAverage); $a++){
-                if ($displayAll == false){
+                if ($displayAll == "false"){
                     if ($dataToAverage[$a]->DogID == $array[$i]->DogName && $dataToAverage[$a]->Date == $array[$i]->Date){
                         $tempArray[0] += $dataToAverage[$a]->Weight;
                         $tempArray[1] += $dataToAverage[$a]->Activity_Level;
@@ -127,7 +127,7 @@ class CanineData extends Model
                     }
                 }
             }
-            if ($displayAll == false){
+            if ($displayAll == "false"){
                 //$averagedDataObject->CanineID = 
                 //$averagedDataObject->OwnerID = 
                 $averagedDataObject->DogID = $array[$i]->DogName;
