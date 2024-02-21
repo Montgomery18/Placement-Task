@@ -24,6 +24,13 @@ class AnimalDataController extends Controller
             $indivData = explode(",", $indivData);
             $dateArray = explode("-", $indivData[2]);
             $date = ($dateArray[2] . "-" . $dateArray[1] . "-" . $dateArray[0]);
+            $i = 0;
+            foreach($indivData as $attribute){
+                if ($attribute == null){
+                    $indivData[$i];
+                }
+                $i++;
+            }
             $arrayInsertSub = [
                 "DogID" => $indivData[0],
                 "Weight" => $indivData[1],

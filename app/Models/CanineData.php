@@ -66,56 +66,68 @@ class CanineData extends Model
         else if ($perDay == "true" && $displayAll == "true"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->whereBetween("Date", [$DateMin, $DateMax])->get();
-            $canineDataAveraged = $thisModel->AverageData($canineData);
-            return $canineDataAveraged;
+            $DogsPresent = DB::table('Canine_Data')->select("DogID")->distinct()->get();
+            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            return dd($canineDataAveraged);
         }
     }
 
-    public function AverageData($dataToAverage){
+    public function AverageData($dataToAverage, $displayAll){
         $averageDataArray = [];
+        $tempArray = [0,0,0,0,0,0,0,0];
+        $DogName = "";
+        $Date = "";
+        $count = -1;
         for($i = 0; $i < count($dataToAverage); $i){
+            if ($DogName != $dataToAverage[$i]->DogID && $Date != $dataToAverage[$i]->Date && $DogName != "" && $Date != ""){
+                $count++;
+            }
+            $DogName = $dataToAverage[$i]->DogID;
+            $Date = $dataToAverage[$i]->Date;
             $averagedDataObject = new \stdClass();
-            $tempArray = [0,0,0,0,0,0,0,0];
-            if ($i == 0){
-                for ($a = 0; $a < 24; $a++){
-                    if (isset($dataToAverage[$a])){
-                        $tempArray[0] += $dataToAverage[$a]->Weight;
-                        $tempArray[1] += $dataToAverage[$a]->Activity_Level;
-                        $tempArray[2] += $dataToAverage[$a]->Heart_Rate;
-                        $tempArray[3] += $dataToAverage[$a]->Calorie_Burn;
+            for ($a = $i; $a < $i + 24; $a++){
+                if (isset($dataToAverage[$a])){
+                    $tempArray[0] += $dataToAverage[$a]->Weight;
+                    $tempArray[1] += $dataToAverage[$a]->Activity_Level;
+                    $tempArray[2] += $dataToAverage[$a]->Heart_Rate;
+                    $tempArray[3] += $dataToAverage[$a]->Calorie_Burn;
+                    try{
                         $tempArray[4] += $dataToAverage[$a]->Temperature;
-                        $tempArray[5] += $dataToAverage[$a]->Food_Intake;
-                        $tempArray[6] += $dataToAverage[$a]->Water_Intake;
-                        $tempArray[7] += $dataToAverage[$a]->Breathing_Rate;
                     }
+                    catch(\Error $e){
+                        return dd($dataToAverage[$a]);
+                    }
+                    $tempArray[5] += $dataToAverage[$a]->Food_Intake;
+                    $tempArray[6] += $dataToAverage[$a]->Water_Intake;
+                    $tempArray[7] += $dataToAverage[$a]->Breathing_Rate;
                 }
             }
-            else{
-                for ($a = 0; $a < $i + 24; $a++){
-                    if (isset($dataToAverage[$a])){
-                        $tempArray[0] += $dataToAverage[$a]->Weight;
-                        $tempArray[1] += $dataToAverage[$a]->Activity_Level;
-                        $tempArray[2] += $dataToAverage[$a]->Heart_Rate;
-                        $tempArray[3] += $dataToAverage[$a]->Calorie_Burn;
-                        $tempArray[4] += $dataToAverage[$a]->Temperature;
-                        $tempArray[5] += $dataToAverage[$a]->Food_Intake;
-                        $tempArray[6] += $dataToAverage[$a]->Water_Intake;                            
-                        $tempArray[7] += $dataToAverage[$a]->Breathing_Rate;
-                    }
-                }
+            if ($displayAll == false){
+                $averagedDataObject->CanineID = $dataToAverage[$i]->CanineID;
+                $averagedDataObject->OwnerID = $dataToAverage[$i]->OwnerID;
+                $averagedDataObject->DogID = $dataToAverage[$i]->DogID;
+                $averagedDataObject->Date = $dataToAverage[$i]->Date;
+                $averagedDataObject->Weight = $tempArray[0] / 24;
+                $averagedDataObject->Activity_Level = $tempArray[1] / 24;
+                $averagedDataObject->Heart_Rate = $tempArray[2] / 24;
+                $averagedDataObject->Calorie_Burn = $tempArray[3] / 24;
+                $averagedDataObject->Temperature = $tempArray[4] / 24;
+                $averagedDataObject->Food_Intake = $tempArray[5] / 24;
+                $averagedDataObject->Water_Intake = $tempArray[6] / 24;
+                $averagedDataObject->Breathing_Rate = $tempArray[7] / 24;
+                $averageDataArray[] = $averagedDataObject;
+                $tempArray = [0,0,0,0,0,0,0,0];
             }
-            $averagedDataObject->CanineID = $dataToAverage[$i]->CanineID; // first time around $IDStartNext is zero
-            $averagedDataObject->OwnerID = $dataToAverage[$i]->OwnerID;
-            $averagedDataObject->Date = $dataToAverage[$i]->Date;
-            $averagedDataObject->Weight = $tempArray[0] / 24;
-            $averagedDataObject->Activity_Level = $tempArray[1] / 24;
-            $averagedDataObject->Heart_Rate = $tempArray[2] / 24;
-            $averagedDataObject->Calorie_Burn = $tempArray[3] / 24;
-            $averagedDataObject->Temperature = $tempArray[4] / 24;
-            $averagedDataObject->Food_Intake = $tempArray[5] / 24;
-            $averagedDataObject->Water_Intake = $tempArray[6] / 24;
-            $averagedDataObject->Breathing_Rate = $tempArray[7] / 24;
-            $averageDataArray[] = $averagedDataObject;
+            else if ($count == 1){
+                $averageDataArray[$count]->Weight += $tempArray[0] / 24;
+                $averageDataArray[$count]->Activity_Level += $tempArray[1] / 24;
+                $averageDataArray[$count]->Heart_Rate += $tempArray[2] / 24;
+                $averageDataArray[$count]->Calorie_Burn += $tempArray[3] / 24;
+                $averageDataArray[$count]->Temperature += $tempArray[4] / 24;
+                $averageDataArray[$count]->Food_Intake += $tempArray[5] / 24;
+                $averageDataArray[$count]->Water_Intake += $tempArray[6] / 24;
+                $averageDataArray[$count]->Breathing_Rate += $tempArray[7] / 24;
+            }
             $i += 24;
         }
         return $averageDataArray;

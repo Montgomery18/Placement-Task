@@ -22,9 +22,7 @@
             @foreach ($data as $d)
                 <br>
                 <p>"{{ $d->CanineID }}"</p>
-                <p>"{{ $d->Hour }}"</p>
                 <p>"{{ $d->Weight }}"</p>
-                <p>"{{ $d->Behaviour }}"</p>
                 <p>"{{ $d->Activity_Level }}"</p>
                 <p>"{{ $d->Temperature }}"</p>
             @endforeach
