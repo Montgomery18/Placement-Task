@@ -47,7 +47,7 @@ Route::get('/Profile', function(){
 
 Route::get('/Trends', function(){
     $animalCont = new AnimalDataController();
-    $graphData = $animalCont->DisplayData("CANINE001", "false", "false", "true");
+    $graphData = $animalCont->DisplayData("CANINE001", "false", "2021-01-01", "true");
     return view('Trends', ["data" => $graphData]);
 });
 
@@ -75,7 +75,7 @@ Route::get('/dumpdata', function(){
     return view('dumpdata');
 });
 
-Route::post('/dumpdata', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('login');
+Route::post('/dumpdata', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('test');
 
 //Route::get('/', function () {
 //    return view('welcome');

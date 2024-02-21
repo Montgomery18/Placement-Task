@@ -81,11 +81,11 @@ class AnimalDataController extends Controller
     public function DisplayDataRangeFiltered(Request $request){
         // write SQLinjection protection here - Might not need due to preselected options on trends
         $canineData = new canineData;
-        if ($request->input('$DateMax') != null){
-            $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), $request->input('DateMax'), $request->input('HourMode'), $request->input('DayMode'));
+        if ($request->input('DateMax') != null){
+            $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), $request->input('DateMax'));
         }
         else{
-            $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), $request->input('DateMin'), $request->input('HourMode'), $request->input('DayMode'));
+            $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), null);
         }
         return view($request->input('page'), ["data" => $canineDataRetrieved]);
     }
