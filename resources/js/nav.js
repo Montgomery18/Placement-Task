@@ -1,9 +1,20 @@
 
 
 
-// For Sidebar intergration.
-var profilePicture = document.getElementById("ProfilePicture");
-var closeButtons = document.getElementsByClassName("CloseButton");
+CheckForSidebar();
+
+
+function CheckForSidebar()
+{
+    var headers = document.getElementsByTagName('header');
+    console.log("THIS IS: nav.js:")
+    console.log(headers[0]);
+
+    if (headers[0].classList.contains('MainHeader'))
+    {
+        addSidebarToButtons();
+    }
+}
 
 
 
@@ -37,9 +48,19 @@ function CloseSidebar()
 }
 
 
-// Add event listeners
-profilePicture.addEventListener('click', OpenSidebar);
+// To prevent crashes on pages without these IDs. This function should only be called when we know the loaded pages actually have these elements. 
+function addSidebarToButtons()
+{
+    // For Sidebar intergration.
+    var profilePicture = document.getElementById("ProfilePicture");
+    var closeButtons = document.getElementsByClassName("CloseButton");
 
-Array.from(closeButtons).forEach(element => {
-    element.addEventListener('click', CloseSidebar);
-});
+    // Add event listeners
+    profilePicture.addEventListener('click', OpenSidebar);
+
+    Array.from(closeButtons).forEach(element => {
+        element.addEventListener('click', CloseSidebar);
+    });
+
+    console.log("ADDED SIDEBAR TO BUTTONS");
+}

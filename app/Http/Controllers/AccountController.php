@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
@@ -44,4 +45,26 @@ class AccountController extends Controller
         }
  
    }
+   public function login()
+    {
+        return view('/index');
+    }
+
+    public function loginPost(Request $request) 
+    {
+
+    $username = $request->input('username');
+    $password = $request->input('password');
+
+   $query = Account::where('Username', $username)->where('Password', $password)->first();
+   
+    if ($query) {
+        
+        return view("Profile");
+    }
+    else
+    {
+        return view('/Login');
+    }
+}
 }

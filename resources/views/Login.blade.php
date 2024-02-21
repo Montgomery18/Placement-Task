@@ -16,14 +16,15 @@
     
     <main class="bg-image bg">
         <section class="form-group float-right">
-            <form class="form was-validated" action="" method="post">
+            <form class="form was-validated" action="{{route('login1')}}" method="post">
+                @csrf
                 <div>
-                    <label for="email" class="form_text">Email</label><br>
-                    <input class="form-control" type="text" id="email" name="email" placeholder="example@email.com" required>
+                    <label for="username" class="form_text">Username</label><br>
+                    <input class="form-control" type="text" id="username" name="username" placeholder="example1" required>
                     <div class="invalid-feedback">Please fill out this field.</div>
                     <br>
-                    <label for="passw" class="form_text">Password</label><br>
-                    <input class="form-control" type="text" id="passw" name="passw" placeholder="********" required>
+                    <label for="password" class="form_text">Password</label><br>
+                    <input class="form-control" type="password" id="password" name="password" placeholder="********" required>
                     <div class="invalid-feedback">Please fill out this field.</div>
                     <br>
                     <input class="btn form_button" type="submit" value="Enter">

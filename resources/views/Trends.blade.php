@@ -6,41 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/Trends.css') }}" rel="stylesheet" >
     <link href="{{ asset('css/Header.css') }}" rel="stylesheet" >
+    <script>
+        window.data = @json($data);
+    </script>
     @vite(['resources/js/app.js'])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <title>Trends</title>
 </head>
-<body>
-    <header> <!--This is the page where the graphs/charts/tables for the canine data will be-->
-    <div id="LeftHead">
-            <img src="{{ asset('images/Elanco_Logo.png') }}" alt="Elanco Logo">
-            <p><a href="/Login">Login</a></p>
-        </div>
-        <div id="RightHead">
-            <h1>Activity Tracker</h1>
-            <nav>
-                <ul>
-                    <li><a href="/Register">Register</a></li>
-                    <li><a href="/ResetPassRequest">Reset Password Request</a></li>                        
-                    <li><a href="/Profile">Profile</a></li>
-                    <li><a href="/Trends">Trends</a></li>
-                    <li><a href="/Admin">Admin</a></li>
-                    <li><a href="/ContactUs">Contact Us</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+
+<body class="TrendsPage">
+
+    @include("Header")
 
     <main>
         <section>
-            <div style="width:600px">
+            <div class="canvas_div">
                 <canvas id="myChart"></canvas>
-                <button type="button">
-                <form>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="day_mode" name="day_mode" value="yes">
+                </div>
+                <form id="day_form" style="display:block">
                     <div class="row">
                         <div class="col">
-                            
+                            <select id="day_form_select" class="form-select">
+                                <option value="Weight">Weight</option>
+                                <option value="Activity_Level">Steps</option>
+                                <option value="Heart_Rate">Heart Rate</option>
+                                <option value="Calorie_Burn">Calories Burned</option>
+                                <option value="Temperature">Temperature</option>
+                                <option value="Food_Intake">Calories Consumed</option>
+                                <option value="Water_Intake">Water Consumed</option>
+                                <option value="Breathing_Rate">Breathing Rate</option>
+                                <option value="Barking Frequency">Barking Frequency</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input id="start" type="date" class="form-control">
+                        </div>
+                        <div class="col">
+                            <input id="end" type="date" class="form-control">
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="form-control">
+                        </div>
+                    </div>
+                </form>
+                <form id="hour_form" style="display:none">
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select">
+                                <option value="Weight">Weight</option>
+                                <option value="Activity_Level">Steps</option>
+                                <option value="Heart_Rate">Heart Rate</option>
+                                <option value="Calorie_Burn">Calories Burned</option>
+                                <option value="Temperature">Temperature</option>
+                                <option value="Food_Intake">Calories Consumed</option>
+                                <option value="Water_Intake">Water Consumed</option>
+                                <option value="Breathing_Rate">Breathing Rate</option>
+                                <option value="Barking Frequency">Barking Frequency</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="form-control">
                         </div>
                     </div>
                 </form>
