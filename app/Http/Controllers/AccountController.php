@@ -56,7 +56,7 @@ class AccountController extends Controller
     $username = $request->input('username');
     $password = $request->input('password');
 
-   $query = DB::table('Account')->where('Username', $username)->where('Password', $password)->first();
+   $query = Account::where('Username', $username)->where('Password', $password)->first();
    
     if ($query) {
         
@@ -64,7 +64,7 @@ class AccountController extends Controller
     }
     else
     {
-        return view('/login');
+        return view('/Login');
     }
 }
 }
