@@ -32,9 +32,9 @@ Route::get('/Register', function(){
     return view('Register');
 });
 
-Route::post('/views', [AccountController::class, 'add'])->name('views.add');
+Route::post('/views/add', [AccountController::class, 'add'])->name('views.add');
 
-Route::post('/views', [AccountController::class, 'delete'])->name('views.delete');
+Route::post('/views/delete', [AccountController::class, 'delete'])->name('views.delete');
 
 
 Route::get('/ResetPassRequest', function(){
