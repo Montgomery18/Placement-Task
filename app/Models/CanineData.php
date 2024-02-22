@@ -13,6 +13,7 @@ class CanineData extends Model
     protected $table = 'Canine_Data'; // for eloquent querying
     public $timestamps = false; // for eloquent querying
 
+    // THIS INSERTS THE CSV INTO THE DB
     public function InsertDataDB($DataToInsert){
         DB::table("Canine_Data")->insert($DataToInsert);
         /*
@@ -23,23 +24,25 @@ class CanineData extends Model
         }
         */
     }
+    // THIS INSERTS THE CSV INTO THE DB
 
-    public function RetrieveData($DogID, $displayAll, $startDateHour, $endDateHour){
+    // THIS GETS DATA FOR CHARTS
+    public function RetrieveDataTrends($DogID, $displayAll, $startDateHour, $endDateHour){
         if ($startDateHour != null && $displayAll == "false"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->where('DogID','=', $DogID)->whereBetween('Date', [$startDateHour, $endDateHour])->get();
-            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
         else if ($startDateHour != null && $displayAll == "true"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->whereBetween('Date', [$startDateHour, $endDateHour])->get();
-            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
     }
 
-    public function RetrieveDataDateFiltered($canineDogDataName, $displayAll, $dateMin, $dateMax){
+    public function RetrieveDataDateFilteredTrends($canineDogDataName, $displayAll, $dateMin, $dateMax){
         if ($dateMax == null && $displayAll == "false"){
             $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$dateMin, $dateMin])->get();
             return $canineData;
@@ -47,18 +50,18 @@ class CanineData extends Model
         else if ($dateMax != null && $displayAll == "false"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$dateMin, $dateMax])->get();
-            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
         else if ($dateMax != null && $displayAll == "true"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->whereBetween("Date", [$dateMin, $dateMax])->get();
-            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
     }
 
-    public function AverageData($dataToAverage, $displayAll){
+    public function ChartAverageData($dataToAverage, $displayAll){
         $array = [];
         $DogName = "";
         $Date = "";
@@ -235,6 +238,7 @@ class CanineData extends Model
         return dd($averageDataArray);
         */
     }
+    // THIS GETS DATA FOR CHARTS
     //CANINE001 - don't need to average this
     //7.2
     //01-01-2021 - date don't average this
@@ -248,4 +252,18 @@ class CanineData extends Model
     //2.0
     //29
     //High
+
+    public function RetrieveProfileAverageData($canineDogDataName){
+        $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->get();
+        $averageCanineData = [0,0,0];
+        foreach ($canineData as $data){
+            $averageCanineData[0] += $data->Activity_Level;
+            $averageCanineData[1] += $data->Temperature;
+            $averageCanineData[2] += $data->Heart_Rate;
+        }
+        $averageCanineData[0] = $averageCanineData[0] / Count($canineData);
+        $averageCanineData[1] = $averageCanineData[1] / Count($canineData);
+        $averageCanineData[2] = $averageCanineData[2] / Count($canineData);
+        return $averageCanineData;
+    }
 }

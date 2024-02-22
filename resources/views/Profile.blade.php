@@ -35,17 +35,17 @@
             <section>
                 <h1>Average Steps:</h1>
                 <!-- Add some sort of circle graph showing Average Steps. -->
-                <p>[] Steps</p>
+                <p>{{ $data[0]}}</p>
             </section>
 
             <section>
                 <h1>Average Temperture:</h1>
-                <p>[] &deg;C</p>
+                <p>{{ $data[1] }} &deg;C</p>
             </section>
 
             <section>
                 <h1>Average BPM:</h1>
-                <p>[] BPM</p>
+                <p>{{ $data[2] }} BPM</p>
             </section>
         
         </div>

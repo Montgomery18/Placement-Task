@@ -43,7 +43,9 @@ Route::get('/ResetPassRequest', function(){
 });
 
 Route::get('/Profile', function(){
-    return view('Profile');
+    $animalCont = new AnimalDataController();
+    $profileData = $animalCont->profileAverage("CANINE001");
+    return view('Profile', ["data" => $profileData]);
 });
 
 Route::get('/Trends', function(){
