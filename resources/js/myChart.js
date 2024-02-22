@@ -15,7 +15,8 @@ function CheckForTrendsPage()
 
 function StartChart()
 {
-    var day_form_select = document.getElementById('day_form_select');
+    var chart1_select = document.getElementById('chart1_select');
+    var chart2_select = document.getElementById('chart2_select');
     var weight = [];
     var steps = [];
     var hr = [];
@@ -49,26 +50,40 @@ function StartChart()
     //console.log(dates);
     //console.log(values)
 
-
-    const xValues = dates;
-    const lineColor = "blue";
-
-    var myChart = new Chart("myChart", {
+    var myChart = new Chart("Chart1", {
     type: "line",
     data: {
-        labels: xValues,
+        labels: dates,
         datasets: [{
-        borderColor: lineColor,
-        data: weight
+        borderColor: "blue",
+        data: steps
         }]
     },
     options: {
         legend: {display: false},
         title: {
             display: true,
-            text: "Weight"
+            text: "Steps"
         },    
     }
+    });
+
+    var myChart2 = new Chart("Chart2", {
+        type: "line",
+        data: {
+            labels: dates,
+            datasets: [{
+            borderColor: "red",
+            data: hr
+            }]
+        },
+        options: {
+            legend: {display: false},
+            title: {
+                display: true,
+                text: "Heart Rate"
+            },    
+        }
     });
 
     var start = document.getElementById('start');
@@ -117,10 +132,10 @@ function StartChart()
         }
     })
 
-    day_form_select.addEventListener('change', function(){
-        console.log(day_form_select.value);
-        myChart.options.title.text = day_form_select.value;
-        switch(day_form_select.value){
+    chart1_select.addEventListener('change', function(){
+        console.log(chart1_select.value);
+        myChart.options.title.text = chart1_select.value;
+        switch(chart1_select.value){
             case "Weight":
                 myChart.data.datasets.forEach((dataset) => {
                     dataset.data = weight;
@@ -166,5 +181,56 @@ function StartChart()
                 break;
         }
         myChart.update();
+    })
+
+    chart2_select.addEventListener('change', function(){
+        console.log(chart2_select.value);
+        myChart2.options.title.text = chart2_select.value;
+        switch(chart2_select.value){
+            case "Weight":
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = weight;
+                })
+                break;
+            case "Steps":
+                //console.log(steps);
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = steps;
+                })
+                break;
+            case "Heart Rate":
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = hr;
+                })
+                break;
+            case "Calories Burned":
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = cb;
+                })
+                break;
+            case "Temperature":
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = temp;
+                })
+                break;
+            case "Calories Consumed":
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = cc;
+                })
+                break;
+            case "Water Consumed":
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = wc;
+                })
+                break;
+            case "Breathing Rate":
+                myChart2.data.datasets.forEach((dataset) => {
+                    dataset.data = br;
+                })
+                break;
+            default:
+                break;
+        }
+        myChart2.update();
     })
 }

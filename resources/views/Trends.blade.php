@@ -21,21 +21,38 @@
 
     <main>
         <section>
+            <div class="row">
+                <div class="col canvas_div">
+                    <canvas id="Chart1"></canvas>
+                    <select id="chart1_select" class="form-select">
+                        <option value="Weight">Weight</option>
+                        <option value="Steps">Steps</option>
+                        <option value="Heart Rate">Heart Rate</option>
+                        <option value="Calories Burned">Calories Burned</option>
+                        <option value="Temperature">Temperature</option>
+                        <option value="Calories Consumed">Calories Consumed</option>
+                        <option value="Water Consumed">Water Consumed</option>
+                        <option value="Breathing Rate">Breathing Rate</option>
+                    </select>
+                </div>
+                <div class = "col canvas_div">
+                    <canvas id="Chart2"></canvas>
+                    <select id="chart2_select" class="form-select">
+                        <option value="Weight">Weight</option>
+                        <option value="Steps">Steps</option>
+                        <option value="Heart Rate">Heart Rate</option>
+                        <option value="Calories Burned">Calories Burned</option>
+                        <option value="Temperature">Temperature</option>
+                        <option value="Calories Consumed">Calories Consumed</option>
+                        <option value="Water Consumed">Water Consumed</option>
+                        <option value="Breathing Rate">Breathing Rate</option>
+                    </select>
+                </div>
+            </div>
             <div class="canvas_div">
-                <canvas id="myChart"></canvas>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="day_mode" name="day_mode" value="yes">
                     <label class="form-check-label" for="day_mode">24hr</label>
-                    <select id="day_form_select" class="form-select">
-                                <option value="Weight">Weight</option>
-                                <option value="Steps">Steps</option>
-                                <option value="Heart Rate">Heart Rate</option>
-                                <option value="Calories Burned">Calories Burned</option>
-                                <option value="Temperature">Temperature</option>
-                                <option value="Calories Consumed">Calories Consumed</option>
-                                <option value="Water Consumed">Water Consumed</option>
-                                <option value="Breathing Rate">Breathing Rate</option>
-                            </select>
                 </div>
                 <form id="day_form" style="display:block" action="{{ route('graphfilter') }}" method="post">
                     @csrf
