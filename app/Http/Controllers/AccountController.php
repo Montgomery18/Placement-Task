@@ -41,7 +41,7 @@ class AccountController extends Controller
            $user->delete($user);
            return view ('/index');
         } else {
-            return view('/AdminDeleteUser');
+            echo ("no work");
         }
  
    }
