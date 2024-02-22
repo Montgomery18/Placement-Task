@@ -16,13 +16,25 @@ function CheckForSidebar()
     }
 }
 
+function IsUserLoggedIn()
+{
+    console.log("This is Login ID: " + window.accountID);
 
+    if (window.accountID == null)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
 
 // Opens sidebar 
 function OpenSidebar()
 {
-    // Change this to check if there's a valid session ID or however we decide that the user is logged in.
-    var userLoggedIn = true;
+    // Checks the current sessionID to see if a user has been logged in.
+    var userLoggedIn = IsUserLoggedIn();
 
     var sidebars = document.getElementsByClassName('Sidebar');
 

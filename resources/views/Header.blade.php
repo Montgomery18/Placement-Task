@@ -2,6 +2,9 @@
 <!-- Importing CSS File -->
 <link href="{{ asset('css/header.css') }}" rel="stylesheet" >
 
+<!-- Add Elanco Icon to browser tab. -->
+<head> <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/Elanco_Icon.ico') }}"/> </head>
+
 <?php 
     if(session()->get("AccountID") != null){
         if(isset($_GET["logout"])){
@@ -13,7 +16,7 @@
 ?>
 <!-- Javascript -->
 <script>
-    window.accountID = session()->get("AccountID");
+    window.accountID = @json(session()->get("AccountID"));
 </script>
 @vite(['resources/js/app.js'])
 
