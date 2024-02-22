@@ -48,9 +48,13 @@ Route::get('/Profile', function(){
 
 Route::get('/Trends', function(){
     $animalCont = new AnimalDataController();
-    $graphData = $animalCont->DisplayData("CANINE001", "false", "2021-01-01", "true");
-    return view('Trends', ["data" => $graphData]);
+    $startDate = "2021-01-01";
+    $endDate = "2021-01-30";
+    $graphData = $animalCont->DisplayData("CANINE001", "false", $startDate, $endDate);
+    return view('Trends', ["data" => $graphData, "startDate" => $startDate, "endDate" => $endDate]);
 });
+
+Route::post('/Trends', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('graphfilter');
 
 Route::get('/Admin', function(){
     return view('Admin');

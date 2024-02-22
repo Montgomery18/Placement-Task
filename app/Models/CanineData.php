@@ -24,20 +24,16 @@ class CanineData extends Model
         */
     }
 
-    public function RetrieveData($DogID, $displayAll, $startDateHour, $perDay){
+    public function RetrieveData($DogID, $displayAll, $startDateHour, $endDateHour){
         if ($startDateHour != null && $displayAll == "false"){
-            $canineData = DB::table('Canine_Data')->where('DogID','=', $DogID)->where('Date' == $startDateHour)->get();
-            return $canineData;
-        }
-        else if ($startDateHour == null && $displayAll == "false"){
             $thisModel = new CanineData();
-            $canineData = DB::table('Canine_Data')->where('DogID','=', $DogID)->get();
+            $canineData = DB::table('Canine_Data')->where('DogID','=', $DogID)->whereBetween('Date', [$startDateHour, $endDateHour])->get();
             $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
-        else if ($perDay == null && $displayAll == "true"){
+        else if ($startDateHour != null && $displayAll == "true"){
             $thisModel = new CanineData();
-            $canineData = DB::table('Canine_Data')->get();
+            $canineData = DB::table('Canine_Data')->whereBetween('Date', [$startDateHour, $endDateHour])->get();
             $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
             return $canineDataAveraged;
         }
@@ -51,7 +47,8 @@ class CanineData extends Model
         else if ($dateMax != null && $displayAll == "false"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$dateMin, $dateMax])->get();
-            return $canineData;
+            $canineDataAveraged = $thisModel->AverageData($canineData, $displayAll);
+            return $canineDataAveraged;
         }
         else if ($dateMax != null && $displayAll == "true"){
             $thisModel = new CanineData();
