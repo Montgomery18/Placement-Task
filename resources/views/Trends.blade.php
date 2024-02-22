@@ -21,7 +21,7 @@
 
     <main>
         <section>
-            <div class="row">
+            <div class="row" style="max-width:100%">
                 <div class="col" style="max-width:48%; margin:auto">
                     <canvas id="Chart1"></canvas>
                     <select id="chart1_select" class="form-select">
@@ -49,7 +49,7 @@
                     </select>
                 </div>
             </div>
-            <div class="form_div">
+            <div class="form_div" style="max-width:100%">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="day_mode" name="day_mode" value="yes">
                     <label class="form-check-label" for="day_mode">24hr</label>
