@@ -22,7 +22,7 @@
     <main>
         <section>
             <div class="row" style="max-width:100%; margin:auto">
-                <div class="col" style="max-width:48%; margin:auto; overflow: auto">
+                <div class="col" style="max-width:48%; margin:auto;">
                     <canvas id="Chart1"></canvas>
                     <select id="chart1_select" class="form-select">
                         <option value="Weight">Weight</option>
@@ -35,7 +35,7 @@
                         <option value="Breathing Rate">Breathing Rate</option>
                     </select>
                 </div>
-                <div class="col"  style="max-width:48%; margin:auto; overflow: auto">
+                <div class="col"  style="max-width:48%; margin:auto;">
                     <canvas id="Chart2"></canvas>
                     <select id="chart2_select" class="form-select">
                         <option value="Weight">Weight</option>
