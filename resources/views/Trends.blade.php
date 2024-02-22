@@ -21,7 +21,7 @@
 
     <main>
         <section>
-            <div class="row" style="max-width:100%">
+            <div class="row" style="max-width:100%; margin:auto">
                 <div class="col" style="max-width:48%; margin:auto">
                     <canvas id="Chart1"></canvas>
                     <select id="chart1_select" class="form-select">
