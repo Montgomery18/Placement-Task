@@ -122,28 +122,28 @@ class CanineData extends Model
                 //$averagedDataObject->OwnerID = 
                 $averagedDataObject->DogID = $array[$i]->DogName;
                 $averagedDataObject->Date = $array[$i]->Date;
-                $averagedDataObject->Weight = $tempArray[0] / 24;
-                $averagedDataObject->Activity_Level = $tempArray[1] / 24;
-                $averagedDataObject->Heart_Rate = $tempArray[2] / 24;
-                $averagedDataObject->Calorie_Burn = $tempArray[3] / 24;
-                $averagedDataObject->Temperature = $tempArray[4] / 24;
-                $averagedDataObject->Food_Intake = $tempArray[5] / 24;
-                $averagedDataObject->Water_Intake = $tempArray[6] / 24;
-                $averagedDataObject->Breathing_Rate = $tempArray[7] / 24;
+                $averagedDataObject->Weight = round($tempArray[0] / 24, 1);
+                $averagedDataObject->Activity_Level = round($tempArray[1] / 24, 1);
+                $averagedDataObject->Heart_Rate = round($tempArray[2] / 24, 1);
+                $averagedDataObject->Calorie_Burn = round($tempArray[3] / 24, 1);
+                $averagedDataObject->Temperature = round($tempArray[4] / 24, 1);
+                $averagedDataObject->Food_Intake = round($tempArray[5] / 24, 1);
+                $averagedDataObject->Water_Intake = round($tempArray[6] / 24, 1);
+                $averagedDataObject->Breathing_Rate = round($tempArray[7] / 24, 1);
                 $averageDataArray[] = $averagedDataObject;
             }
             else{
                 //$averagedDataObject->CanineID =
                 //$averagedDataObject->OwnerID =
                 $averagedDataObject->Date = $array[$i]->Date;
-                $averagedDataObject->Weight = $tempArray[0] / 72;
-                $averagedDataObject->Activity_Level = $tempArray[1] / 72;
-                $averagedDataObject->Heart_Rate = $tempArray[2] / 72;
-                $averagedDataObject->Calorie_Burn = $tempArray[3] / 72;
-                $averagedDataObject->Temperature = $tempArray[4] / 72;
-                $averagedDataObject->Food_Intake = $tempArray[5] / 72;
-                $averagedDataObject->Water_Intake = $tempArray[6] / 72;
-                $averagedDataObject->Breathing_Rate = $tempArray[7] / 72;
+                $averagedDataObject->Weight = round($tempArray[0] / 72, 1);
+                $averagedDataObject->Activity_Level = round($tempArray[1] / 72, 1);
+                $averagedDataObject->Heart_Rate = round($tempArray[2] / 72, 1);
+                $averagedDataObject->Calorie_Burn = round($tempArray[3] / 72, 1);
+                $averagedDataObject->Temperature = round($tempArray[4] / 72, 1);
+                $averagedDataObject->Food_Intake = round($tempArray[5] / 72, 1);
+                $averagedDataObject->Water_Intake = round($tempArray[6] / 72, 1);
+                $averagedDataObject->Breathing_Rate = round($tempArray[7] / 72, 1);
                 $averageDataArray[] = $averagedDataObject;
             }
         }
@@ -261,9 +261,9 @@ class CanineData extends Model
             $averageCanineData[1] += $data->Temperature;
             $averageCanineData[2] += $data->Heart_Rate;
         }
-        $averageCanineData[0] = $averageCanineData[0] / Count($canineData);
-        $averageCanineData[1] = $averageCanineData[1] / Count($canineData);
-        $averageCanineData[2] = $averageCanineData[2] / Count($canineData);
+        $averageCanineData[0] = round($averageCanineData[0] / Count($canineData), 1);
+        $averageCanineData[1] = round($averageCanineData[1] / Count($canineData), 1);
+        $averageCanineData[2] = round($averageCanineData[2] / Count($canineData), 1);
         return $averageCanineData;
     }
 }
