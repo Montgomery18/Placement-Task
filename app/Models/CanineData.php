@@ -62,10 +62,11 @@ class CanineData extends Model
     }
 
     public function ChartAverageData($dataToAverage, $displayAll){
+        $arrayDistinctName = [];
         $array = [];
         $DogName = "";
         $Date = "";
-        $UsedDates = "";
+        $UsedDates = [];
         for($i = 0; $i < count($dataToAverage); $i++){
             $object = new \stdClass();
             if ($displayAll == "false"){
@@ -78,8 +79,12 @@ class CanineData extends Model
                 }
             }
             else{
-                if ($Date != $dataToAverage[$i]->Date && $UsedDates != $dataToAverage[$i]->Date || $Date == ""){
-                    $UsedDates = $Date;
+                if ($Date != $dataToAverage[$i]->Date && !in_array($dataToAverage[$i]->Date, $UsedDates) || $Date == ""){
+                    if ($DogName != $dataToAverage[$i]->DogID || $DogName == ""){
+                        $DogName = $dataToAverage[$i]->DogID;
+                        $arrayDistinctName[] = $DogName;
+                    }
+                    $UsedDates[] = $Date;
                     $Date = $dataToAverage[$i]->Date;
                     $object->Date = $Date;
                     $array[] = $object;
@@ -87,6 +92,7 @@ class CanineData extends Model
             }
         }
 
+        $distinctNameCount = Count($arrayDistinctName);
         $averageDataArray = [];
         for($i = 0; $i < count($array); $i++){
             $averagedDataObject = new \stdClass();
@@ -136,14 +142,14 @@ class CanineData extends Model
                 //$averagedDataObject->CanineID =
                 //$averagedDataObject->OwnerID =
                 $averagedDataObject->Date = $array[$i]->Date;
-                $averagedDataObject->Weight = round($tempArray[0] / 72, 1);
-                $averagedDataObject->Activity_Level = round($tempArray[1] / 72, 1);
-                $averagedDataObject->Heart_Rate = round($tempArray[2] / 72, 1);
-                $averagedDataObject->Calorie_Burn = round($tempArray[3] / 72, 1);
-                $averagedDataObject->Temperature = round($tempArray[4] / 72, 1);
-                $averagedDataObject->Food_Intake = round($tempArray[5] / 72, 1);
-                $averagedDataObject->Water_Intake = round($tempArray[6] / 72, 1);
-                $averagedDataObject->Breathing_Rate = round($tempArray[7] / 72, 1);
+                $averagedDataObject->Weight = round($tempArray[0] / (24 * $distinctNameCount), 1);
+                $averagedDataObject->Activity_Level = round($tempArray[1] / (24 * $distinctNameCount), 1);
+                $averagedDataObject->Heart_Rate = round($tempArray[2] / (24 * $distinctNameCount), 1);
+                $averagedDataObject->Calorie_Burn = round($tempArray[3] / (24 * $distinctNameCount), 1);
+                $averagedDataObject->Temperature = round($tempArray[4] / (24 * $distinctNameCount), 1);
+                $averagedDataObject->Food_Intake = round($tempArray[5] / (24 * $distinctNameCount), 1);
+                $averagedDataObject->Water_Intake = round($tempArray[6] / (24 * $distinctNameCount), 1);
+                $averagedDataObject->Breathing_Rate = round($tempArray[7] / (24 * $distinctNameCount), 1);
                 $averageDataArray[] = $averagedDataObject;
             }
         }
