@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elanco Animal Tracker</title>
 
@@ -25,11 +26,25 @@
             <link href="{{ asset('css/ContactUs.css') }}" rel="stylesheet" >
            <html>
               <body>
-                    <h2> Contact number = 01256353131</h2>
-                    <h2> Email=ElancoPartners@elanco.com</h2>
-                    <h2> Office address : Form 2, Bartley Wood, Bartley Wood Business Park, Hook, RG27 9XA</h2>
+                <div class = "contact-info">
+                    <i class="fa-solid fa-phone"></i>
+                    <h2> <b>Contact number</b></h2>
+                    <p>01256353131</p>
+                </div>
 
-               <div id="googleMap" style="width:500px;height:500px;margin:auto;"></div>
+                <div class = "contact-info">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h2> <b>Email</b> </h2>
+                    <p>ElancoPartners@elanco.com</p>
+                </div>
+
+                <div class = "contact-info">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h2> <b>Address</b></h2>
+                    <p>Form 2, Bartley Wood, Bartley Wood Business Park, Hook, RG27 9XA</p>
+                </div>
+
+               <div id="googleMap"></div>
 
                <script>
                    function myMap() {
@@ -43,7 +58,7 @@
                    animation:google.maps.Animation.BOUNCE
                    marker.setMap(map);
                    }
-               </script>
+                   </script>
 
               <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlVrwmx_xztSwSiS_zZQMrNacxEup3UDo&callback=myMap"></script>
 
@@ -56,9 +71,6 @@
     </main>
 
      @include("Footer")
-    
-   
-   
     
 </body>
 </html>

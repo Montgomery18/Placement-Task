@@ -2,7 +2,22 @@
 <!-- Importing CSS File -->
 <link href="{{ asset('css/header.css') }}" rel="stylesheet" >
 
+<!-- Add Elanco Icon to browser tab. -->
+<head> <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/Elanco_Icon.ico') }}"/> </head>
+
+<?php 
+    if(session()->get("AccountID") != null){
+        if(isset($_GET["logout"])){
+            if ($_GET["logout"] == true){
+                session()->forget('AccountID');
+            }
+        }
+    }
+?>
 <!-- Javascript -->
+<script>
+    window.accountID = @json(session()->get("AccountID"));
+</script>
 @vite(['resources/js/app.js'])
 
 
@@ -36,7 +51,8 @@
             <li><a href="javascript:void(0)" class="CloseButton">×</a></li>
             <li><a href="/Profile">Profile</a></li>
             <li><a href="/Trends">Trends</a></li>
-            <li><a href="/ResetPassRequest">Reset Password Request</a></li>  
+            <li><a href="/ResetPassRequest">Reset Password Request</a></li>
+            <li><a href="/?logout=true">Logout</a></li>  
         </ul>
     </nav>
 

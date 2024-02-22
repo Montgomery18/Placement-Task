@@ -40,8 +40,9 @@ class AccountController extends Controller
        if ($user) {
            $user->delete($user);
            return view ('/index');
-        } else {
-            echo ("no work");
+        } 
+        else {
+            return view('/AdminDeleteUser');
         }
  
    }
@@ -56,9 +57,10 @@ class AccountController extends Controller
     $username = $request->input('username');
     $password = $request->input('password');
 
-   $query = Account::where('Username', $username)->where('Password', $password)->first();
+    $query = Account::where('Username', $username)->where('Password', $password)->value("AccountID");
+    session(["AccountID" => $query]);
    
-    if ($query) {
+    if (isset($query)) {
         
         return view("Profile");
     }

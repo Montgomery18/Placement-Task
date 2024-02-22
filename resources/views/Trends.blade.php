@@ -25,6 +25,17 @@
                 <canvas id="myChart"></canvas>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="day_mode" name="day_mode" value="yes">
+                    <label class="form-check-label" for="day_mode">24hr</label>
+                    <select id="day_form_select" class="form-select">
+                                <option value="Weight">Weight</option>
+                                <option value="Steps">Steps</option>
+                                <option value="Heart Rate">Heart Rate</option>
+                                <option value="Calories Burned">Calories Burned</option>
+                                <option value="Temperature">Temperature</option>
+                                <option value="Calories Consumed">Calories Consumed</option>
+                                <option value="Water Consumed">Water Consumed</option>
+                                <option value="Breathing Rate">Breathing Rate</option>
+                            </select>
                 </div>
                 <form id="day_form" style="display:block" action="{{ route('graphfilter') }}" method="post">
                     @csrf
@@ -33,30 +44,17 @@
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
-                            <select id="day_form_select" class="form-select">
-                                <option value="Weight">Weight</option>
-                                <option value="Activity_Level">Steps</option>
-                                <option value="Heart_Rate">Heart Rate</option>
-                                <option value="Calorie_Burn">Calories Burned</option>
-                                <option value="Temperature">Temperature</option>
-                                <option value="Food_Intake">Calories Consumed</option>
-                                <option value="Water_Intake">Water Consumed</option>
-                                <option value="Breathing_Rate">Breathing Rate</option>
-                                <option value="Barking_Frequency">Barking Frequency</option>
-                            </select>
-                        </div>
-                        <div class="col">
                             @if (@isset($startDate))
-                                <input id="start" type="date" name="DateMin" class="form-control" value="{{$startDate}}">
+                                <input id="start" type="date" name="DateMin" class="form-control" value="{{$startDate}}" min="2021-01-01" max="2023-12-31">
                             @else
-                                <input id="start" type="date" name="DateMin" class="form-control">
+                                <input id="start" type="date" name="DateMin" class="form-control" min="2021-01-01" max="2023-12-31">
                             @endif
                         </div>
                         <div class="col">
                             @if (@isset($endDate))
-                                <input id="end" type="date" name="DateMax" class="form-control" value="{{$endDate}}">
+                                <input id="end" type="date" name="DateMax" class="form-control" value="{{$endDate}}" min="2021-01-01" max="2023-12-31">
                             @else
-                                <input id="end" type="date" name="DateMax" class="form-control">
+                                <input id="end" type="date" name="DateMax" class="form-control" min="2021-01-01" max="2023-12-31">
                             @endif
                         </div>
                         <div class="col">
@@ -71,20 +69,7 @@
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
-                            <select class="form-select">
-                                <option value="Weight">Weight</option>
-                                <option value="Activity_Level">Steps</option>
-                                <option value="Heart_Rate">Heart Rate</option>
-                                <option value="Calorie_Burn">Calories Burned</option>
-                                <option value="Temperature">Temperature</option>
-                                <option value="Food_Intake">Calories Consumed</option>
-                                <option value="Water_Intake">Water Consumed</option>
-                                <option value="Breathing_Rate">Breathing Rate</option>
-                                <option value="Barking Frequency">Barking Frequency</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <input type="date" class="form-control" name="DateMin">
+                            <input type="date" class="form-control" name="DateMin" min="2021-01-01" max="2023-12-31">
                         </div>
                         <div class="col">
                             <input type="submit" class="form-control">
