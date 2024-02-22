@@ -71,10 +71,10 @@ class AnimalDataController extends Controller
         }
         */
     }
-    public function DisplayData($DogID, $displayAll ,$HourMode, $DayMode){
+    public function DisplayData($DogID, $displayAll, $startDate, $endDate){
         // Don't believe this requires SQLinjection, its the intial display of data
         $canineData = new canineData;
-        $canineDataRetrieved = $canineData->RetrieveData($DogID, $displayAll, $HourMode, $DayMode);
+        $canineDataRetrieved = $canineData->RetrieveDataTrends($DogID, $displayAll, $startDate, $endDate);
         return $canineDataRetrieved;
     }
 
@@ -82,11 +82,16 @@ class AnimalDataController extends Controller
         // write SQLinjection protection here - Might not need due to preselected options on trends
         $canineData = new canineData;
         if ($request->input('DateMax') != null){
-            $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), $request->input('DateMax'));
+            $canineDataRetrieved = $canineData->RetrieveDataDateFilteredTrends($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), $request->input('DateMax'));
         }
         else{
-            $canineDataRetrieved = $canineData->RetrieveDataDateFiltered($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), null);
+            $canineDataRetrieved = $canineData->RetrieveDataDateFilteredTrends($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), null);
         }
         return view($request->input('page'), ["data" => $canineDataRetrieved]);
+    }
+
+    public function profileAverage($DogID){
+        $canineData = new canineData;
+        return $canineData->RetrieveProfileAverageData($DogID);
     }
 }
