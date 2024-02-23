@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Title</h1>
-    </header>
+    <div id="container">
+        <header>
+            <h1>Cost Data Dashboard</h1>
+        </header>
 
-    <main>
-        
-    </main>
-    
-    <footer>
+        <main>
+            <p>Welcome to the cost data dashboard</p>
+            <p>Please select the data option you would like to view below</p>
+            <button><a href="/data_page">View Data</a></button>
+        </main>
 
-    </footer>
+        <footer>
+            <p>placeholder</p>
+        </footer>   
+    </div>
 </body>
 </html>
