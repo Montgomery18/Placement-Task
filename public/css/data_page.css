@@ -28,6 +28,7 @@ section{
     border-radius: 10px;
     border-style: solid;
     margin: 20px;
+    padding: 25px
 }
 
 footer{
@@ -35,8 +36,78 @@ footer{
     border-radius: 10px;
     border-style: solid;
     margin-top: 10px;
+    background-color: rgb(107, 173, 221)
 }
 
 h1{
     margin: 5px;
+}
+
+a:link{
+    color: floralwhite;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 10px;
+}
+
+a:visited{
+    color: floralwhite;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+}
+
+form label{
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+form option{
+    text-align: center;
+}
+
+form input{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+table{
+    border-width: 2px;
+    border-bottom: 0px;
+    border-style: solid;
+    border-collapse: collapse;
+}
+
+table tr{
+    border: 0px;
+    border-bottom: 1px;
+    border-style: solid;
+}
+
+table th{
+    border: 0px;
+    border-left: 1px;
+    border-style: solid;
+    padding: 5px;
+    text-align: center;
+}
+
+table th:first-child{
+    border-left: 0px;
+}
+
+table td{
+    border: 0px;
+    border-left: 1px;
+    border-style: solid;
+    padding: 5px;
+}
+
+table td:first-child{
+    border-left: 0px;
 }

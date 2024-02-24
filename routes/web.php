@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\APIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,6 @@ Route::get('/', function(){
     return view('index');
 });
 
-Route::get('/data_page', function(){
-    return view('data_page');
-});
+Route::get('/data_page', [APIController::class, "GetApplicationName"]);
+
+Route::post('/data_page', [APIController::class, "RetrieveData"])->name("selectData");
