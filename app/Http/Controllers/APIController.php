@@ -85,7 +85,7 @@ class APIController extends Controller
                 return view('data_page');
             }
         }
-        else if (isset($request->specific) && session()->has("AppData")){
+        else if (isset($request->specific) && session()->has("AppData")){ // this is for selecting specific data
             $data = session()->get("AppData");
             if (isset($data[$request->specific])){
                 return view('data_page', ["specificData" => $data[$request->specific]]);
