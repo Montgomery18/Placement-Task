@@ -43,9 +43,9 @@
                     $AppData = [];
                     if (session()->has("AppData")){
                         $AppData = session()->get("AppData");
-                        echo "<h3>Application -" . session()->get("appName") . "</h3>";
+                        echo "<h3>Application - " . session()->get("appName") . "</h3>";
                         if (isset($AppData[4]->ServiceName)){
-                            echo "<h3>Resources -" . $AppData[4]->ServiceName . "</h3>";
+                            echo "<h3>Resources - " . $AppData[4]->ServiceName . "</h3>";
                         }
                         else{
                             echo "<h3>Resources - Null </h3>";
@@ -105,8 +105,8 @@
                 <h2>Data Tools</h2>
                 <?php
                     if (session()->has("AppData")){
-                        echo "<h3 style='margin-top:12px;'>Application -" . session()->get("appName") . "</h3>";
-                        echo "<h3 style='margin-bottom:10px;'>Resources -" . $AppData[4]->ServiceName . "</h3>";
+                        echo "<h3 style='margin-top:12px;'>Application - " . session()->get("appName") . "</h3>";
+                        echo "<h3 style='margin-bottom:10px;'>Resources - " . $AppData[4]->ServiceName . "</h3>";
                     }
                 ?>
                 <form id="Tools" action="{{ route('selectData') }}" method="post">
