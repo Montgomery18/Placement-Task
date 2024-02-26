@@ -8,7 +8,7 @@
 ## How To Setup
 - Download the project
 - Navigate to the projects folder via command line
-- Type composer install into the command line and click enter
+- Type composer install into the command line and then run it
 - Create a file called .env within your projects root folder
 - Copy and paste the following into the .env file you just created
 ```
