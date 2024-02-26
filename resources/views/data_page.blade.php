@@ -40,10 +40,16 @@
                     <input type="submit" value="Submit">
                 </form>
                 <?php
+                    $AppData = [];
                     if (session()->has("AppData")){
                         $AppData = session()->get("AppData");
                         echo "<h3>Application -" . session()->get("appName") . "</h3>";
-                        echo "<h3>Resources -" . $AppData[4]->ServiceName . "</h3>";
+                        if (isset($AppData[4]->ServiceName)){
+                            echo "<h3>Resources -" . $AppData[4]->ServiceName . "</h3>";
+                        }
+                        else{
+                            echo "<h3>Resources - Null </h3>";
+                        }
                     }
                     else{
                         echo "<h3>Application - Waiting for input</h3>";
@@ -58,7 +64,7 @@
                         <th>Cost</th>
                     </tr>
                     <?php
-                        if (isset($AppData)){
+                        if (session()->has("AppData")){
                             $countLimit = session()->get("AppDataDisplay") + 6;
                             for ($i = session()->get("AppDataDisplay"); $i < $countLimit; $i++){
                                 if (isset($AppData[$i])){
@@ -73,10 +79,10 @@
                         }
                         else{
                             echo "<tr>";
-                            echo "<td>Awaiting User Choice</td>";
-                            echo "<td>Awaiting User Choice</td>";
-                            echo "<td>Awaiting User Choice</td>";
-                            echo "<td>Awaiting User Choice</td>";
+                            echo "<td>Awaiting Choice</td>";
+                            echo "<td>Awaiting Choice</td>";
+                            echo "<td>Awaiting Choice</td>";
+                            echo "<td>Awaiting Choice</td>";
                             echo "</tr>";
                         }
                     ?>
@@ -154,7 +160,11 @@
                 <form id="Tools" action="{{ route('selectData') }}" method="post">
                     @csrf
                     <label>Select Specific Entry</label>
-                    <input type="number" min="0" max="@php count(session()->get('AppData')) @endphp" id="specific" name="specific" value="0">
+                    @if (session()->get('AppData') !== null)
+                        <input type="number" min="0" max="@php count(session()->get('AppData')) @endphp" id="specific" name="specific" value="0">
+                    @else
+                        <input type="number" min="0" id="specific" name="specific" value="0">
+                    @endif
                     <input type="submit" value="submit">
                 </form>
                 <?php

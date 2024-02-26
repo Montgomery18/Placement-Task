@@ -12,6 +12,7 @@ class APIController extends Controller
             $response = Http::get('https://engineering-task.elancoapps.com/api/applications');
             $applicationNameArray = json_decode($response);
             session(["ApplicationNames" => $applicationNameArray]);
+            return view('data_page');
         }
         return view('data_Page');
     }
@@ -26,7 +27,7 @@ class APIController extends Controller
             session(["AppData" => $data, "AppDataDisplay" => 0, "appName" => $request->ApplicationSelect]);
             return view('data_page');
         }
-        else if (isset($request->Nextwhere)){ // this is for shifting what data is displayed (a max of 5 pieces of data is shown at a time to the user)
+        else if (isset($request->Nextwhere) && session()->has("AppData") ){ // this is for shifting what data is displayed (a max of 5 pieces of data is shown at a time to the user)
             $dataNumber = session()->get("AppDataDisplay");
             if ($request->Nextwhere == "forward"){
                 if ($dataNumber + $request->NextFive <= count(session()->get("AppData"))){
