@@ -1,4 +1,4 @@
-## Tech Stack Used
+## Tech Used
 - PHP Laravel
 
 ## Needed Dependencies To Run
