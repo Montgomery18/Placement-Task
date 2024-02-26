@@ -20,4 +20,4 @@ Route::get('/', function(){
 
 Route::get('/data_page', [APIController::class, "GetApplicationName"]);
 
-Route::post('/data_page', [APIController::class, "RetrieveData"])->name("selectData");
+Route::post('/data_page', [APIController::class, "RetrieveManipulateData"])->name("selectData");

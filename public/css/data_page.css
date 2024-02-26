@@ -25,10 +25,11 @@ main{
 
 section{
     width: fit-content;
+    height: fit-content;
     border-radius: 10px;
     border-style: solid;
     margin: 20px;
-    padding: 25px
+    padding: 25px;
 }
 
 footer{
@@ -127,6 +128,7 @@ table td{
     border-left: 1px;
     border-style: solid;
     padding: 5px;
+    text-align: center;
 }
 
 table td:first-child{
