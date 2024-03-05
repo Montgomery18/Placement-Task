@@ -26,6 +26,7 @@ function StartChart()
     var wc = [];
     var br = [];
     var dates = [];
+    var x_label = 'Date';
 
     console.log(window.data)
     window.data.forEach(getValues);
@@ -41,6 +42,7 @@ function StartChart()
         br.push(item.Breathing_Rate);
         if(item.Hour != null){
             dates.push(item.Hour);
+            x_label = item.Date;
         }
         else{
             dates.push(item.Date);
@@ -64,7 +66,15 @@ function StartChart()
         title: {
             display: true,
             text: "Steps"
-        },    
+        }, 
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: x_label
+                }
+            }]
+        }
     }
     });
 
@@ -82,7 +92,15 @@ function StartChart()
             title: {
                 display: true,
                 text: "Heart Rate"
-            },    
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: x_label
+                    }
+                }]
+            }
         }
     });
 

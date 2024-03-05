@@ -21,12 +21,12 @@
 
     <main>
         <section>
-            <div class="row">
-                <div class="col canvas_div">
+            <div class="row" style="max-width:100%; margin:auto">
+                <div class="col" style="max-width:48%; margin:auto;">
                     <canvas id="Chart1"></canvas>
                     <select id="chart1_select" class="form-select">
                         <option value="Weight">Weight</option>
-                        <option value="Steps">Steps</option>
+                        <option value="Steps" selected="selected">Steps</option>
                         <option value="Heart Rate">Heart Rate</option>
                         <option value="Calories Burned">Calories Burned</option>
                         <option value="Temperature">Temperature</option>
@@ -35,12 +35,12 @@
                         <option value="Breathing Rate">Breathing Rate</option>
                     </select>
                 </div>
-                <div class = "col canvas_div">
+                <div class="col"  style="max-width:48%; margin:auto;">
                     <canvas id="Chart2"></canvas>
                     <select id="chart2_select" class="form-select">
                         <option value="Weight">Weight</option>
                         <option value="Steps">Steps</option>
-                        <option value="Heart Rate">Heart Rate</option>
+                        <option value="Heart Rate" selected="selected">Heart Rate</option>
                         <option value="Calories Burned">Calories Burned</option>
                         <option value="Temperature">Temperature</option>
                         <option value="Calories Consumed">Calories Consumed</option>
@@ -49,7 +49,7 @@
                     </select>
                 </div>
             </div>
-            <div class="canvas_div">
+            <div class="form_div" style="max-width:100%">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="day_mode" name="day_mode" value="yes">
                     <label class="form-check-label" for="day_mode">24hr</label>
@@ -61,6 +61,7 @@
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
+                            <label for="DateMin" class="form-label">Start Date</label>
                             @if (@isset($startDate))
                                 <input id="start" type="date" name="DateMin" class="form-control" value="{{$startDate}}" min="2021-01-01" max="2023-12-31">
                             @else
@@ -68,6 +69,7 @@
                             @endif
                         </div>
                         <div class="col">
+                            <label for="DateMax" class="form-label">End Date</label>
                             @if (@isset($endDate))
                                 <input id="end" type="date" name="DateMax" class="form-control" value="{{$endDate}}" min="2021-01-01" max="2023-12-31">
                             @else
@@ -75,7 +77,8 @@
                             @endif
                         </div>
                         <div class="col">
-                            <input type="submit" class="form-control">
+                            <label for="submit" class="form-label">Submit</label>
+                            <input name="submit" type="submit" class="form-control">
                         </div>
                     </div>
                 </form>
@@ -86,10 +89,12 @@
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
+                            <label for="DateMin" class="form-label">Date</label>
                             <input type="date" class="form-control" name="DateMin" min="2021-01-01" max="2023-12-31">
                         </div>
                         <div class="col">
-                            <input type="submit" class="form-control">
+                            <label for="submit" class="form-label">Submit</label>
+                            <input name="submit" type="submit" class="form-control">
                         </div>
                     </div>
                 </form>
@@ -100,8 +105,6 @@
         </section>
     </main>
 
-    <footer>
-
-    </footer>
+    @include("Footer")
 </body>
 </html>
