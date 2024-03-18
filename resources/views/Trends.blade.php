@@ -75,6 +75,18 @@
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
+                            <label for="behaviour" class="form-label">Behaviour</label>
+                            <select id="behaviour" class="form-select">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="bf" class="form-label">Barking Frequency</label>
+                            <select id="bf" class="form-select">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </div>
+                        <div class="col">
                             <label for="DateMin" class="form-label">Start Date</label>
                             @if (@isset($startDate))
                                 <input id="start" type="date" name="DateMin" class="form-control" value="{{$startDate}}" min="2021-01-01" max="2023-12-31">
@@ -109,6 +121,18 @@
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
+                            <label for="behaviour" class="form-label">Behaviour</label>
+                            <select id="behaviour" class="form-select">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="bf" class="form-label">Barking Frequency</label>
+                            <select id="bf" class="form-select">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </div>
+                        <div class="col">
                             <label for="DateMin" class="form-label">Date</label>
                             <input type="date" class="form-control" name="DateMin" min="2021-01-01" max="2023-12-31">
                         </div>
@@ -118,6 +142,9 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div style="text-align: center">
+                <p class="heading">Metrics</p>
             </div>
         </section>
         <section>
