@@ -7,6 +7,16 @@ body
     font-family: 'OpenSans', sans-serif;
 }
 
+/* So that BootStrap 5 doesn't change how the profile page looks. */
+h1 { 
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
 
 
 /* Profile Flex Box */
@@ -45,7 +55,8 @@ body
     border-radius: 10px;
     text-align: center;
     margin-top: 10px;
-    width: 350px;
+    width: 30%;
+    height: 100%;
     line-height: 75px;
 }
 
@@ -58,7 +69,6 @@ section > h1
 .TopBox
 {
     position: relative;
-
 }
 
 /* IDs */

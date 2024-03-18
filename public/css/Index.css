@@ -2,25 +2,25 @@
 
 .bg {
     background-image: url("../images/Elanco_Index_Background_Image.png");
-    height: 50px;
+    height: 0px;
+    width: 100%;
     background-position: 0% 0%;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 100% 100%;
 }
 
+
+
 .container-overlay{
-    background-color:white;
+    background-color: rgb(255, 255, 255, 0.7);
     border: solid;
     border-color: black;
     border-radius:25px;
     padding: 2px;
-    height: 300px;
-    width: 600px;
-    position:relative;
-    left:450px;
-    top:200px;
-    opacity:0.7;
-    resize:block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 180px;
+    width: 50%;
 }
 
 .container-text {
@@ -37,9 +37,24 @@
     text-align:center;
     font-family: 'Open Sans';
     font-weight: bold;
-    position:relative;
-    left:675px;
-    top:140px;
     width: 150px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius:5px;
+}
+
+/* Make clickable area match button */
+.Register_button > form > button
+{
+    display: block;
+    width: 100%;
+}
+
+/* For Gallery */
+
+#ImageGallery
+{
+    margin: auto;
+    border-style: solid;
+    border-width: 5px;
 }
