@@ -60,9 +60,7 @@ class AccountController extends Controller
     session(["AccountID" => $query]);
    
     if (isset($query)) {
-        $animalCont = new AnimalDataController();
-        $profileData = $animalCont->profileAverage("CANINE001");
-        return view("Profile", ["data" => $profileData]);
+        return view("/index");
     }
     else
     {
