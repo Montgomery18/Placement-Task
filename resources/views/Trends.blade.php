@@ -22,8 +22,12 @@
     <main>
         <section>
             <div class="row" style="max-width:100%; margin:auto">
-                <div class="col" style="max-width:48%; margin:auto;">
+                <div class="col" style="max-width:48%; margin:auto">
                     <canvas id="Chart1"></canvas>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="chart_1_bar" name="chart_1_bar">
+                        <label class="form-check-label" for="chart_1_bar">Bar Chart</label>
+                    </div>
                     <select id="chart1_select" class="form-select">
                         <option value="Weight">Weight</option>
                         <option value="Steps" selected="selected">Steps</option>
@@ -37,6 +41,10 @@
                 </div>
                 <div class="col"  style="max-width:48%; margin:auto;">
                     <canvas id="Chart2"></canvas>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="chart_2_bar" name="chart_2_bar">
+                        <label class="form-check-label" for="chart_2_bar">Bar Chart</label>
+                    </div>
                     <select id="chart2_select" class="form-select">
                         <option value="Weight">Weight</option>
                         <option value="Steps">Steps</option>
