@@ -1,5 +1,15 @@
 
 
+header > div > h1 { 
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.2em;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+
 header{
     display: flex;
     flex-direction: row;

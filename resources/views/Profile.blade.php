@@ -6,12 +6,13 @@
     <title>Canine Profile</title>
 
     <!-- Bootstrap 5 -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="{{ asset('css/desktop.css') }}" rel="stylesheet" >
     
     <link href="{{ asset('css/profile-desktop.css') }}" rel="stylesheet" >
 </head>
+
 <body>
 
     <!-- Temperary Header Stuff (Look into either PHP includes or Building components with Blade.) -->
