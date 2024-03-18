@@ -52,38 +52,46 @@ function StartChart()
     //console.log(dates);
     //console.log(values)
 
-    var myChart = new Chart("Chart1", {
-    type: "line",
-    data: {
-        labels: dates,
-        datasets: [{
-        borderColor: "blue",
-        data: steps
-        }]
-    },
-    options: {
-        legend: {display: false},
-        title: {
-            display: true,
-            text: "Steps"
-        }, 
-        scales: {
-            xAxes: [{
-                scaleLabel: {
-                    display: true,
-                    labelString: x_label
-                }
+    var Chart1Set = {
+        type: "line",
+        data: {
+            labels: dates,
+            datasets: [{
+            borderColor: "blue",
+            backgroundColor: "",
+            data: steps
             }]
+        },
+        options: {
+            legend: {display: false},
+            title: {
+                display: true,
+                text: "Steps"
+            }, 
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: x_label
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
     }
-    });
+    var myChart = new Chart("Chart1", Chart1Set);
 
-    var myChart2 = new Chart("Chart2", {
+    var Chart2Set = {
         type: "line",
         data: {
             labels: dates,
             datasets: [{
             borderColor: "red",
+            backgroundColor: "",
             data: hr
             }]
         },
@@ -99,14 +107,23 @@ function StartChart()
                         display: true,
                         labelString: x_label
                     }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }]
             }
         }
-    });
+    }
+    var myChart2 = new Chart("Chart2", Chart2Set);
 
     var start = document.getElementById('start');
     var end = document.getElementById('end');
-    var day_mode = document.getElementById('day_mode')
+    var day_mode = document.getElementById('day_mode');
+    var bar_1 = document.getElementById('chart_1_bar');
+    var bar_2 = document.getElementById('chart_2_bar');
+
 
     start.addEventListener('change', function() {
         if (start.value)
@@ -151,7 +168,7 @@ function StartChart()
     })
 
     chart1_select.addEventListener('change', function(){
-        console.log(chart1_select.value);
+        //console.log(chart1_select.value);
         myChart.options.title.text = chart1_select.value;
         switch(chart1_select.value){
             case "Weight":
@@ -202,7 +219,7 @@ function StartChart()
     })
 
     chart2_select.addEventListener('change', function(){
-        console.log(chart2_select.value);
+        //console.log(chart2_select.value);
         myChart2.options.title.text = chart2_select.value;
         switch(chart2_select.value){
             case "Weight":
@@ -250,5 +267,33 @@ function StartChart()
                 break;
         }
         myChart2.update();
+    })
+
+    bar_1.addEventListener('change', function(){
+        //console.log(bar_1.value);
+        if(Chart1Set.type == "line"){
+            Chart1Set.type = "bar";
+            myChart.data.datasets.forEach((dataset) => {dataset.backgroundColor="blue"});
+            myChart.update();
+        }
+        else{
+            Chart1Set.type = "line";
+            myChart.data.datasets.forEach((dataset) => {dataset.backgroundColor=""});
+            myChart.update();
+        }
+    })
+
+    bar_2.addEventListener('change', function(){
+        //console.log("Change");
+        if(Chart2Set.type == "line"){
+            Chart2Set.type = "bar";
+            myChart2.data.datasets.forEach((dataset) => {dataset.backgroundColor="red"});
+            myChart2.update();
+        }
+        else{
+            Chart2Set.type = "line";
+            myChart2.data.datasets.forEach((dataset) => {dataset.backgroundColor=""});
+            myChart2.update();
+        }
     })
 }
