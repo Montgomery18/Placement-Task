@@ -3,3 +3,14 @@
     margin: auto;
     padding: 10px;
 }
+
+.chart-row{
+    max-width:50%;
+    margin:auto;
+}
+
+@media only screen and (max-width: 900px) {
+    [class*="chart-row"] {
+      max-width: 100%;
+    }
+}

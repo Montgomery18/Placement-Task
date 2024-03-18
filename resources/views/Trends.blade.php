@@ -21,8 +21,8 @@
 
     <main>
         <section>
-            <div class="row" style="max-width:100%; margin:auto">
-                <div class="col" style="max-width:48%; margin:auto">
+            <div class="row">
+                <div class="col chart-row">
                     <canvas id="Chart1"></canvas>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="chart_1_bar" name="chart_1_bar">
@@ -39,7 +39,7 @@
                         <option value="Breathing Rate">Breathing Rate</option>
                     </select>
                 </div>
-                <div class="col"  style="max-width:48%; margin:auto;">
+                <div class="col chart-row">
                     <canvas id="Chart2"></canvas>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="chart_2_bar" name="chart_2_bar">
