@@ -71,6 +71,27 @@ class AnimalDataController extends Controller
         }
         */
     }
+
+    public function GetUsersDogs($ownerID){
+        $canineData = new canineData;
+        $dogs = $canineData->GetDogs($ownerID);
+        return $dogs;
+    }
+
+    public function SetUserDesiredDog(Request $DogWanted){
+        if (session()->get("SelectedDog") !== null){
+            session(["SelectedDog" => $DogWanted->input('Select')]);
+        }
+        else{
+            session()->forget("SelectedDog");
+            session(["SelectedDog" => $DogWanted->input('Select')]);
+        }
+        $thisController = new AnimalDataController();
+        $usersDog = $thisController->GetUsersDogs(session()->get("AccountID"));
+        $profileData = $thisController->profileAverage($DogWanted->input('Select'));
+        return view("/Profile", ["DogID" => $usersDog, "Data" => $profileData]);
+    }
+    
     public function DisplayData($DogID, $displayAll, $startDate, $endDate){
         // Don't believe this requires SQLinjection, its the intial display of data
         $canineData = new canineData;
@@ -87,7 +108,7 @@ class AnimalDataController extends Controller
         else{
             $canineDataRetrieved = $canineData->RetrieveDataDateFilteredTrends($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), null);
         }
-        return view($request->input('page'), ["data" => $canineDataRetrieved]);
+        return view($request->input('page'), ["data" => $canineDataRetrieved, "DogID" => $request->input("DogID")]);
     }
 
     public function profileAverage($DogID){

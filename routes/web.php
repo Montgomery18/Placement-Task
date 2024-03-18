@@ -44,16 +44,50 @@ Route::get('/ResetPassRequest', function(){
 
 Route::get('/Profile', function(){
     $animalCont = new AnimalDataController();
-    $profileData = $animalCont->profileAverage("CANINE001");
-    return view('Profile', ["data" => $profileData]);
+    if (session()->get("AccountID") !== null){
+        $usersDog = $animalCont->GetUsersDogs(session()->get("AccountID"));
+        if (session()->get("SelectedDog") !== null){
+            $profileData = $animalCont->profileAverage(session()->get("SelectedDog"));
+            return view('Profile', ["DogID" => $usersDog, "Data" => $profileData]);
+        }
+        else{
+            if ($usersDog != null){
+                $profileData = $animalCont->profileAverage($usersDog[0]->DogID);
+            }
+            else{
+                $profileData = null;
+            }
+            return view('Profile', ["DogID" => $usersDog, "Data" => $profileData]);
+        }
+    }
+    else{
+        return view('/index');
+    }
+    
+    //$profileData = $animalCont->profileAverage("CANINE001");
+    //return view('Profile', ["data" => $profileData]);
 });
 
+Route::post('/Profile', [AnimalDataController::class, 'SetUserDesiredDog'])->name('SelectDog');
+
 Route::get('/Trends', function(){
-    $animalCont = new AnimalDataController();
-    $startDate = "2021-01-01";
-    $endDate = "2021-01-30";
-    $graphData = $animalCont->DisplayData("CANINE001", "false", $startDate, $endDate);
-    return view('Trends', ["data" => $graphData, "startDate" => $startDate, "endDate" => $endDate]);
+    if (session()->get("AccountID") !== null){
+        $animalCont = new AnimalDataController();
+        $startDate = "2021-01-01";
+        $endDate = "2021-01-30";
+        if (session()->get("SelectedDog") !== null){
+            $graphData = $animalCont->DisplayData(session()->get("SelectedDog"), "false", $startDate, $endDate);
+            return view('Trends', ["data" => $graphData, "startDate" => $startDate, "endDate" => $endDate]);
+        }
+        else{
+            $usersDog = $animalCont->GetUsersDogs(session()->get("AccountID"));
+            $graphData = $animalCont->DisplayData($usersDog[0]->DogID, "false", $startDate, $endDate);
+            return view('Trends', ["data" => $graphData, "DogID" => $usersDog[0]->DogID, "startDate" => $startDate, "endDate" => $endDate]);
+        }
+    }
+    else{
+        return view('/index');
+    }
 });
 
 Route::post('/Trends', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('graphfilter');

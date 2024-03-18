@@ -26,6 +26,13 @@ class CanineData extends Model
     }
     // THIS INSERTS THE CSV INTO THE DB
 
+    // THIS GETS THE DOGS A OWNER HAS
+    public function GetDogs($ownerID){
+        $canineData = DB::table('Canine_Data')->select('DogID')->distinct()->where('OwnerID',"=", $ownerID)->Get();
+        return $canineData;
+    }
+    // THIS GETS THE DOGS A OWNER HAS
+
     // THIS GETS DATA FOR CHARTS
     public function RetrieveDataTrends($DogID, $displayAll, $startDateHour, $endDateHour){
         if ($startDateHour != null && $displayAll == "false"){

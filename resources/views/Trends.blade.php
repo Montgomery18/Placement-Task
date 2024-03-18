@@ -65,7 +65,13 @@
                 <form id="day_form" style="display:block" action="{{ route('graphfilter') }}" method="post">
                     @csrf
                     <input style="display:none" type="text" name="page" value="\Trends">
-                    <input style="display:none" type="text" name="DogID" value="CANINE001"> <!-- Temporary, will only show canine001 for now -->
+                    @if (session()->get("SelectedDog") !== null)
+                        <input style="display:none" type="text" name="DogID" value="{{ session()->get('SelectedDog') }}">
+                    @elseif (isset($DogID))
+                        <input style="display:none" type="text" name="DogID" value="{{ $DogID }}">
+                    @else
+                        <input style="display:none" type="text" name="DogID" value="null">
+                    @endif
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
@@ -93,7 +99,13 @@
                 <form id="hour_form" style="display:none" action="{{ route('graphfilter') }}" method="post">
                     @csrf
                     <input style="display:none" type="text" name="page" value="\Trends">
-                    <input style="display:none" type="text" name="DogID" value="CANINE001"> <!-- Temporary, will only show canine001 for now -->
+                    @if (session()->get("SelectedDog") !== null)
+                        <input style="display:none" type="text" name="DogID" value="{{ session()->get('SelectedDog') }}">
+                    @elseif (isset($DogID))
+                        <input style="display:none" type="text" name="DogID" value="{{ $DogID }}">
+                    @else
+                        <input style="display:none" type="text" name="DogID" value="null">
+                    @endif
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
