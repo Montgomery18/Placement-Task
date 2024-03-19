@@ -266,8 +266,20 @@ class CanineData extends Model
     //29
     //High
 
-    public function RetrieveProfileAverageData($canineDogDataName){
-        $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->get();
+    public function RetrieveProfileAverageData($canineDogDataName, $behaviour, $barkFreq){
+        $canineData;
+        if ($behaviour == "All" && $barkFreq == "All"){ // this data will produces per hour average for entire time frame
+            $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->get();
+        }
+        else if ($behaviour != "All" && $barkFreq == "All"){ // this data will produces per hour average for entire time frame for a specific behaviour
+            $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->where('Behaviour','=', $behaviour)->get();
+        }
+        else if ($behaviour == "All" && $barkFreq != "All"){ // This data will Produces per hour average for entire time frame for a specific barking frequency
+            $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->where('Barking_Frequency','=', $barkFreq)->get();
+        }
+        else if ($behaviour != "All" && $barkFreq != "All"){ // This data will produces per hour average for entire time frame for a specific behaviour and barking frequency
+            $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->where('Behaviour','=', $behaviour)->where('Barking_Frequency',"=", $barkFreq)->get();
+        }
         $averageCanineData = [0,0,0];
         foreach ($canineData as $data){
             $averageCanineData[0] += $data->Activity_Level;

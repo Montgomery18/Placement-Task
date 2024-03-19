@@ -68,7 +68,7 @@ Route::get('/Profile', function(){
     //return view('Profile', ["data" => $profileData]);
 });
 
-Route::post('/Profile', [AnimalDataController::class, 'SetUserDesiredDog'])->name('SelectDog');
+Route::post('/Profile', [AnimalDataController::class, 'ProfilePageManage'])->name('profileData');
 
 Route::get('/Trends', function(){
     if (session()->get("AccountID") !== null){

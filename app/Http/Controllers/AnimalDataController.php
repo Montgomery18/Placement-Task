@@ -44,7 +44,7 @@ class AnimalDataController extends Controller
                 "Food_Intake" => $indivData[9],
                 "Water_Intake" => $indivData[10],
                 "Breathing_Rate" => $indivData[11],
-                "Barking_Frequency" => $indivData[12]
+                "Barking_Frequency" => str_replace("\r", "", $indivData[12]) // gets rid of the /r on the end of this piece of data
             ];
             $arrayInsert[] = $arrayInsertSub;
             $count = $count + 1;
@@ -78,18 +78,25 @@ class AnimalDataController extends Controller
         return $dogs;
     }
 
-    public function SetUserDesiredDog(Request $DogWanted){
-        if (session()->get("SelectedDog") !== null){
-            session(["SelectedDog" => $DogWanted->input('Select')]);
+    public function ProfilePageManage(Request $form){
+        if ($form->input('formType') == "SelectDog"){
+            if (session()->get("SelectedDog") !== null){
+                session(["SelectedDog" => $form->input('Select')]);
+            }
+            else{
+                session()->forget("SelectedDog");
+                session(["SelectedDog" => $form->input('Select')]);
+            }
+            $thisController = new AnimalDataController();
+            $usersDog = $thisController->GetUsersDogs(session()->get("AccountID"));
+            $profileData = $thisController->profileAverage($form->input('Select'));
+            return view("/Profile", ["DogID" => $usersDog, "Data" => $profileData]);
         }
-        else{
-            session()->forget("SelectedDog");
-            session(["SelectedDog" => $DogWanted->input('Select')]);
+        else if ($form->input('FormType') == "Averages"){
+            $canineData = new CanineData();
+            $average = $canineData->RetrieveProfileAverageData($form->input("DogID"), $form->input("Behaviour"), $form->input("BarkingFrequency")); // Finish later
+            return view("/Profile", ["DogName" => $form->input("DogID"), "Data" => $average, "Behaviour" => $form->input("Behaviour"), "BarkingFrequency" => $form->input("BarkingFrequency")]);
         }
-        $thisController = new AnimalDataController();
-        $usersDog = $thisController->GetUsersDogs(session()->get("AccountID"));
-        $profileData = $thisController->profileAverage($DogWanted->input('Select'));
-        return view("/Profile", ["DogID" => $usersDog, "Data" => $profileData]);
     }
     
     public function DisplayData($DogID, $displayAll, $startDate, $endDate){
@@ -113,6 +120,6 @@ class AnimalDataController extends Controller
 
     public function profileAverage($DogID){
         $canineData = new canineData;
-        return $canineData->RetrieveProfileAverageData($DogID);
+        return $canineData->RetrieveProfileAverageData($DogID, "All", "All");
     }
 }

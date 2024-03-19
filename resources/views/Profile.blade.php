@@ -28,6 +28,8 @@
                 <h1>{{ session()->get("SelectedDog") }}</h1>
             @elseif (isset($DogID))
                 <h1>{{ $DogID[0]->DogID }}</h1>
+            @elseif (isset($DogName))
+                <h1>{{ $DogName }}</h1>
             @else
                 <h1>Null</h1>
             @endif
@@ -36,30 +38,54 @@
             <p>Name: [Insert Dog Name Here]</p>
             <p>Breed: []</p>
             <p>Age: []</p>
+            <form id="BehaviourAndBarkFrequency" action="{{ route('profileData') }}" method="post">
+                @csrf
+                <input style="display:none" type="text" name="FormType" value="Averages">
+                @if (session()->get("SelectedDog") !== null)
+                    <input style="display:none" type="text" name="DogID" value="{{ session()->get('SelectedDog') }}">
+                @elseif (isset($DogID))
+                    <input style="display:none" type="text" name="DogID" value="{{ $DogID[0]->DogID }}">
+                @elseif (isset($DogName))
+                    <input style="display:none" type="text" name="DogID" value="{{ $DogName }}">
+                @endif
+                <label for="Behaviour">Select Your Dog</label>
+                <select ID="Behaviour" name="Behaviour" form="BehaviourAndBarkFrequency">
+                    <option value="All">All</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Sleeping">Sleeping</option>
+                </select>
+                <label for="BarkingFrequency">Select Your Dog</label>
+                <select ID="BarkingFrequency" name="BarkingFrequency" form="BehaviourAndBarkFrequency">
+                    <option value="All">All</option>
+                    <option value="None">None</option>
+                    <option value="Medium">Medium</option>
+                </select>
+                <button type="submit">test</button>
+            </form>
         </section>
         
         <div class="smallerFlexDisplay">
 
             <section>
-                <h1>Average Steps:</h1>
+                <h1>Average Steps Per Hour:</h1>
                 <!-- Add some sort of circle graph showing Average Steps. -->
                 <p> {{ $Data[0] }}</p>
             </section>
 
             <section>
-                <h1>Average Temperture:</h1>
+                <h1>Average Temperture Per Hour:</h1>
                 <p> {{ $Data[1] }}</p>
             </section>
 
             <section>
-                <h1>Average BPM:</h1>
+                <h1>Average BPM Per Hour:</h1>
                 <p> {{ $Data[2] }}</p>
             </section>
         
         </div>
     </main>
 
-    <form id="SelectDog" action="{{ route('SelectDog') }}" method="post">
+    <form id="SelectDog" action="{{ route('profileData') }}" method="post">
         @csrf
         <label for="SelectDog">Select Your Dog</label>
         <select ID="Select" name="Select" form="SelectDog">
