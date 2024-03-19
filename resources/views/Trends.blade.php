@@ -122,6 +122,12 @@
             </div>
             <div style="text-align: center">
                 <p class="heading">Metrics</p>
+                <p id="steps"></p>
+                <p id="cc"></p>
+                <p id="cb"></p>
+                <p id="cd"></p>
+                <p id="wc"></p>
+                <p id="weight"></p>
             </div>
         </section>
         <section>

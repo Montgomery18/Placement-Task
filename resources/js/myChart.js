@@ -27,11 +27,11 @@ function StartChart()
     var br = [];
     var dates = [];
     var x_label = 'Date';
-    var day_mode_check = false;
     var total_cc = 0;
     var total_cb = 0;
     var total_steps = 0;
     var total_wc = 0;
+    var weight_gain = 0;
 
     //console.log(window.data)
     window.data.forEach(getValues);
@@ -47,7 +47,6 @@ function StartChart()
         br.push(item.Breathing_Rate);
         if(item.Hour != null){
             dates.push(item.Hour);
-            day_mode_check = true;
             x_label = item.Date;
         }
         else{
@@ -55,29 +54,19 @@ function StartChart()
         }
     }
 
+    weight_gain = (weight[(weight.length-1)] - weight[0]);
+    total_steps = Math.round(window.sumData[0] * 100) / 100;
+    total_cb = Math.round(window.sumData[1] * 100) / 100;
+    total_cc = Math.round(window.sumData[2] * 100) / 100;
+    total_wc = Math.round(window.sumData[3] * 100) / 100;
+
     //console.log(dates);
     //console.log(values)
-    if(day_mode_check){
-        total_steps = Math.round(window.sumData[0] * 100) / 100;
-        total_cb = Math.round(window.sumData[1] * 100) / 100;
-        total_cc = Math.round(window.sumData[2] * 100) / 100;
-        total_wc = Math.round(window.sumData[3] * 100) / 100;
-        console.log("Total Steps is " + total_steps)
-        console.log("Total Calories Eaten is " + total_cc)
-        console.log("Total Calories Burned is " + total_cb)
-        console.log("Calorie Deficit is " + (total_cc - total_cb))
-        console.log("Total Water Consummed is " + total_wc)
-    }else{
-        total_steps = Math.round(window.sumData[0] * 100) / 100;
-        total_cb = Math.round(window.sumData[1] * 100) / 100;
-        total_cc = Math.round(window.sumData[2] * 100) / 100;
-        total_wc = Math.round(window.sumData[3] * 100) / 100;
-        console.log("Total Steps is " + total_steps)
-        console.log("Total Calories Eaten is " + total_cc)
-        console.log("Total Calories Burned is " + total_cb)
-        console.log("Calorie Deficit is " + (total_cc - total_cb))
-        console.log("Total Water Consummed is " + total_wc)
-    }
+    /*console.log("Total Steps is " + total_steps)
+    console.log("Total Calories Eaten is " + total_cc)
+    console.log("Total Calories Burned is " + total_cb)
+    console.log("Calorie Deficit is " + (total_cc - total_cb))
+    console.log("Total Water Consummed is " + total_wc)*/
 
     var Chart1Set = {
         type: "line",
@@ -323,4 +312,11 @@ function StartChart()
             myChart2.update();
         }
     })
+
+    document.getElementById('steps').innerHTML = ("Total Steps: " + total_steps);
+    document.getElementById('cc').innerHTML = ("Total Calories Eaten: " + total_cc);
+    document.getElementById('cb').innerHTML = ("Total Calories Burned: " + total_cb);
+    document.getElementById('cd').innerHTML = ("Calorie Difference: " + (total_cc - total_cb));
+    document.getElementById('wc').innerHTML = ("Water Drank: " + total_wc);
+    document.getElementById('weight').innerHTML = ("Your Dog Gained " + weight_gain + "kg");
 }
