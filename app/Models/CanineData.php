@@ -15,7 +15,7 @@ class CanineData extends Model
 
     // THIS INSERTS THE CSV INTO THE DB
     public function InsertDataDB($DataToInsert){
-        DB::table("Canine_Data")->insert($DataToInsert);
+        DB::table('Canine_Data')->insert($DataToInsert);
         /*
         foreach($fileDataArray as $indivData){
             $indivData = explode(",", $indivData);
@@ -25,6 +25,10 @@ class CanineData extends Model
         */
     }
     // THIS INSERTS THE CSV INTO THE DB
+
+    public function DeleteDataDB(){
+        DB::table('Canine_Data')->truncate();
+    }
 
     // THIS GETS THE DOGS A OWNER HAS
     public function GetDogs($ownerID){

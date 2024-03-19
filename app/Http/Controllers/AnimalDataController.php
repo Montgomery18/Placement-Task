@@ -151,6 +151,14 @@ class AnimalDataController extends Controller
         return $canineData->BehavioursAndBarkFreq($dogID);
     }
 
+    public function RegenerateDataFromCSV(){
+        $thisController = new AnimalDataController();
+        $canineData = new CanineData();
+        $canineData->DeleteDataDB();
+        $thisController->FileDBWrite();
+        return view('/Admin');
+    }
+
     public function showForm()
     {
         return view('prediction_form');

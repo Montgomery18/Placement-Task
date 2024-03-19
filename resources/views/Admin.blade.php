@@ -18,6 +18,13 @@
                 <li><a href="/AdminDeleteUser">Manage Users</a></li>
             </ul>
         </section>
+
+        <section>
+            <form id="RegenData" action="{{ route('RegenData')}}" method="post">
+                @csrf
+                <button type="submit">Regenerate Database</button>
+            </form>
+        </section>
     </main>
 
     <footer>
