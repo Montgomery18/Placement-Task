@@ -117,6 +117,14 @@ Route::get('/dumpdata', function(){
 
 Route::post('/dumpdata', [AnimalDataController::class, 'DisplayDataRangeFiltered'])->name('test');
 
+Route::get('/Prediction', function(){
+    return view('Prediction');
+});
+
+Route::post('/', [AnimalDataController::class, 'showForm']);
+Route::post('/Prediction', [AnimalDataController::class, 'predict'])->name('predict');
+
+
 //Route::get('/', function () {
 //    return view('welcome');
 //});
