@@ -5,6 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\CanineData;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Rubix\ML\Datasets\Labeled;
+use Rubix\ML\Datasets\Unlabeled;
+use Rubix\ML\Persisters\Filesystem;
+use Rubix\ML\Persisters\Serializers\Json;
+use Rubix\ML\Extractors\CSV;
+use Rubix\ML\Classifiers\KNearestNeighbors;
+use Rubix\ML\Transformers\NumericStringConverter;
+use Rubix\ML\AnomalyDetectors\GaussianMLE;
+use Rubix\ML\CrossValidation\HoldOut;
+use Rubix\ML\CrossValidation\Metrics\Accuracy;
+use Rubix\ML\Transformers\KNNImputer;
+use Rubix\ML\Graph\Trees\BallTree;
+use Rubix\ML\Kernels\Distance\SafeEuclidean;
+use Rubix\ML\Kernels\Distance\Minkowski;
+use Rubix\ML\Classifiers\ClassificationTree;
+use Rubix\ML\PersistentModel;
+use Rubix\ML\Clusterers\KMeans;
+
 
 class AnimalDataController extends Controller
 {
@@ -132,4 +150,43 @@ class AnimalDataController extends Controller
         $canineData = new canineData();
         return $canineData->BehavioursAndBarkFreq($dogID);
     }
+
+    public function showForm()
+    {
+        return view('prediction_form');
+    }
+
+    public function predict(Request $request)
+    {
+        // Validate the form data
+        $validatedData = $request->validate([
+            'weight' => 'required|numeric',
+            'activityLevel' => 'required|string',
+            'heartRate' => 'required|numeric',
+            'calorieBurn' => 'required|numeric',
+            'temperature' => 'required|numeric',
+            'foodIntake' => 'required|numeric',
+            'waterIntake' => 'required|numeric',
+            'breathingRate' => 'required|numeric',
+            'barkingFrequency' => 'required|string',
+        ]);
+
+       
+
+       $dataset = Labeled::fromIterator(new CSV('C:\PSP\Activity-Monitor\database\activityData2.csv', true))
+        ->apply(new NumericStringConverter());
+
+       $estimator = new ClassificationTree(10, 5, 0.001, null, null);
+       
+       $estimator->train($dataset);
+
+        $samples=[
+            ['weight', 'activityLevel', 'heartRate', 'calorieBurn', 'temperature', 'foodIntake', 'waterIntake', 'breathingRate', 'barkingFrequency'],
+        ];
+
+        $PredictionSet= new Unlabeled($samples);
+        $Predictions= $estimator -> predict($PredictionSet);
+        return view ("/Prediction", ["Predictions" => $Predictions]);
+    }
+
 }
