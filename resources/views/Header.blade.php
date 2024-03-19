@@ -9,7 +9,7 @@
     if(session()->get("AccountID") != null){
         if(isset($_GET["logout"])){
             if ($_GET["logout"] == true){
-                session()->forget('AccountID');
+                session()->flush();
             }
         }
     }

@@ -44,7 +44,7 @@ class AnimalDataController extends Controller
                 "Food_Intake" => $indivData[9],
                 "Water_Intake" => $indivData[10],
                 "Breathing_Rate" => $indivData[11],
-                "Barking_Frequency" => $indivData[12]
+                "Barking_Frequency" => str_replace("\r", "", $indivData[12]) // gets rid of the /r on the end of this piece of data
             ];
             $arrayInsert[] = $arrayInsertSub;
             $count = $count + 1;
@@ -71,6 +71,37 @@ class AnimalDataController extends Controller
         }
         */
     }
+
+    public function GetUsersDogs($ownerID){
+        $canineData = new canineData;
+        $dogs = $canineData->GetDogs($ownerID);
+        return $dogs;
+    }
+
+    public function ProfilePageManage(Request $form){
+        if ($form->input('FormType') == "SelectDog"){
+            if (session()->get("SelectedDog") !== null){
+                session(["SelectedDog" => $form->input('Select')]);
+            }
+            else{
+                session()->forget("SelectedDog");
+                session(["SelectedDog" => $form->input('Select')]);
+            }
+            $thisController = new AnimalDataController();
+            $canineData = new CanineData();
+            $usersDog = $thisController->GetUsersDogs(session()->get("AccountID"));
+            $profileData = $canineData->RetrieveProfileAverageData(session()->get("SelectedDog"), "All", "All");
+            return view("/Profile", ["DogID" => $usersDog, "Data" => $profileData]);
+        }
+        else if ($form->input('FormType') == "Averages"){
+            $thisController = new AnimalDataController();
+            $canineData = new CanineData();
+            $usersDog = $thisController->GetUsersDogs(session()->get("AccountID"));
+            $average = $canineData->RetrieveProfileAverageData($form->input("DogID"), $form->input("Behaviour"), $form->input("BarkingFrequency")); // Finish later
+            return view("/Profile", ["DogID" => $usersDog, "Data" => $average, "Behaviour" => $form->input("Behaviour"), "BarkingFrequency" => $form->input("BarkingFrequency")]);
+        }
+    }
+    
     public function DisplayData($DogID, $displayAll, $startDate, $endDate){
         // Don't believe this requires SQLinjection, its the intial display of data
         $canineData = new canineData;
@@ -87,11 +118,11 @@ class AnimalDataController extends Controller
         else{
             $canineDataRetrieved = $canineData->RetrieveDataDateFilteredTrends($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), null);
         }
-        return view($request->input('page'), ["data" => $canineDataRetrieved]);
+        return view($request->input('page'), ["data" => $canineDataRetrieved[0], "SummedData" => $canineDataRetrieved[1], "DogID" => $request->input("DogID")]);
     }
 
     public function profileAverage($DogID){
         $canineData = new canineData;
-        return $canineData->RetrieveProfileAverageData($DogID);
+        return $canineData->RetrieveProfileAverageData($DogID, "All", "All");
     }
 }

@@ -21,9 +21,13 @@
 
     <main>
         <section>
-            <div class="row" style="max-width:100%; margin:auto">
-                <div class="col" style="max-width:48%; margin:auto;">
+            <div class="row">
+                <div class="col chart-row">
                     <canvas id="Chart1"></canvas>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="chart_1_bar" name="chart_1_bar">
+                        <label class="form-check-label" for="chart_1_bar">Bar Chart</label>
+                    </div>
                     <select id="chart1_select" class="form-select">
                         <option value="Weight">Weight</option>
                         <option value="Steps" selected="selected">Steps</option>
@@ -35,8 +39,12 @@
                         <option value="Breathing Rate">Breathing Rate</option>
                     </select>
                 </div>
-                <div class="col"  style="max-width:48%; margin:auto;">
+                <div class="col chart-row">
                     <canvas id="Chart2"></canvas>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="chart_2_bar" name="chart_2_bar">
+                        <label class="form-check-label" for="chart_2_bar">Bar Chart</label>
+                    </div>
                     <select id="chart2_select" class="form-select">
                         <option value="Weight">Weight</option>
                         <option value="Steps">Steps</option>
@@ -57,7 +65,13 @@
                 <form id="day_form" style="display:block" action="{{ route('graphfilter') }}" method="post">
                     @csrf
                     <input style="display:none" type="text" name="page" value="\Trends">
-                    <input style="display:none" type="text" name="DogID" value="CANINE001"> <!-- Temporary, will only show canine001 for now -->
+                    @if (session()->get("SelectedDog") !== null)
+                        <input style="display:none" type="text" name="DogID" value="{{ session()->get('SelectedDog') }}">
+                    @elseif (isset($DogID))
+                        <input style="display:none" type="text" name="DogID" value="{{ $DogID }}">
+                    @else
+                        <input style="display:none" type="text" name="DogID" value="null">
+                    @endif
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
@@ -85,7 +99,13 @@
                 <form id="hour_form" style="display:none" action="{{ route('graphfilter') }}" method="post">
                     @csrf
                     <input style="display:none" type="text" name="page" value="\Trends">
-                    <input style="display:none" type="text" name="DogID" value="CANINE001"> <!-- Temporary, will only show canine001 for now -->
+                    @if (session()->get("SelectedDog") !== null)
+                        <input style="display:none" type="text" name="DogID" value="{{ session()->get('SelectedDog') }}">
+                    @elseif (isset($DogID))
+                        <input style="display:none" type="text" name="DogID" value="{{ $DogID }}">
+                    @else
+                        <input style="display:none" type="text" name="DogID" value="null">
+                    @endif
                     <input style="display:none" type="text" name="DisplayAll" value="false">
                     <div class="row">
                         <div class="col">
@@ -98,6 +118,9 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div style="text-align: center">
+                <p class="heading">Metrics</p>
             </div>
         </section>
         <section>
