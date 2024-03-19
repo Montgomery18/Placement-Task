@@ -8,6 +8,7 @@
     <link href="{{ asset('css/Header.css') }}" rel="stylesheet" >
     <script>
         window.data = @json($data);
+        window.sumData = @json($SummedData);
     </script>
     @vite(['resources/js/app.js'])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>

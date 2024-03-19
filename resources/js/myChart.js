@@ -3,11 +3,11 @@ CheckForTrendsPage();
 function CheckForTrendsPage()
 {
     var bodyTags = document.getElementsByTagName('body');
-    console.log(bodyTags);
+    //console.log(bodyTags);
 
     if (bodyTags[0].classList.contains('TrendsPage'))
     {
-        console.log("Test");
+        //console.log("Test");
         StartChart();
     }
 }
@@ -27,8 +27,13 @@ function StartChart()
     var br = [];
     var dates = [];
     var x_label = 'Date';
+    var day_mode_check = false;
+    var total_cc = 0;
+    var total_cb = 0;
+    var total_steps = 0;
+    var total_wc = 0;
 
-    console.log(window.data)
+    //console.log(window.data)
     window.data.forEach(getValues);
 
     function getValues(item){
@@ -42,6 +47,7 @@ function StartChart()
         br.push(item.Breathing_Rate);
         if(item.Hour != null){
             dates.push(item.Hour);
+            day_mode_check = true;
             x_label = item.Date;
         }
         else{
@@ -51,6 +57,27 @@ function StartChart()
 
     //console.log(dates);
     //console.log(values)
+    if(day_mode_check){
+        total_steps = Math.round(window.sumData[0] * 100) / 100;
+        total_cb = Math.round(window.sumData[1] * 100) / 100;
+        total_cc = Math.round(window.sumData[2] * 100) / 100;
+        total_wc = Math.round(window.sumData[3] * 100) / 100;
+        console.log("Total Steps is " + total_steps)
+        console.log("Total Calories Eaten is " + total_cc)
+        console.log("Total Calories Burned is " + total_cb)
+        console.log("Calorie Deficit is " + (total_cc - total_cb))
+        console.log("Total Water Consummed is " + total_wc)
+    }else{
+        total_steps = Math.round(window.sumData[0] * 100) / 100;
+        total_cb = Math.round(window.sumData[1] * 100) / 100;
+        total_cc = Math.round(window.sumData[2] * 100) / 100;
+        total_wc = Math.round(window.sumData[3] * 100) / 100;
+        console.log("Total Steps is " + total_steps)
+        console.log("Total Calories Eaten is " + total_cc)
+        console.log("Total Calories Burned is " + total_cb)
+        console.log("Calorie Deficit is " + (total_cc - total_cb))
+        console.log("Total Water Consummed is " + total_wc)
+    }
 
     var Chart1Set = {
         type: "line",
