@@ -54,6 +54,58 @@ function StartChart()
         }
     }
 
+    function findAnomolies(array){
+        let temp_array, q1, q3, iqr, max, min;
+
+        temp_array = array.toSorted();
+
+        if((temp_array.length / 4) % 1 === 0){//find quartiles
+            q1 = 1/2 * (temp_array[(temp_array.length / 4)] + temp_array[(temp_array.length / 4) + 1]);
+            q3 = 1/2 * (temp_array[(temp_array.length * (3 / 4))] + temp_array[(temp_array.length * (3 / 4)) + 1]);
+        } else {
+            q1 = temp_array[Math.floor(temp_array.length / 4 + 1)];
+            q3 = temp_array[Math.ceil(temp_array.length * (3 / 4) + 1)];
+        }
+
+        iqr = q3 - q1;
+        //max = q3 + iqr;
+        //min = q1 - iqr;
+        if(iqr == 0){
+            iqr = 0.5;
+        }
+        else if(iqr < 2){
+            //console.log("I have a tiny iqr");
+            max = q3 + iqr * 2;
+            min = q1 - iqr * 2;
+        }
+        else{
+            max = q3 + iqr * 1.5;
+            min = q1 - iqr * 1.5;
+        }
+
+
+        for(let i = 0; i < array.length; i+=1){
+            if(array[i] < min || array[i] > max){
+                console.log(array[i]);
+            }
+        }
+    }
+
+    console.log("Steps");
+    findAnomolies(steps);
+    console.log("CC");
+    findAnomolies(cc);
+    console.log("CB");
+    findAnomolies(cb);
+    console.log("WC");
+    findAnomolies(wc);
+    console.log("Temp");
+    findAnomolies(temp);
+    console.log("HR");
+    findAnomolies(hr);
+    console.log("Weight");
+    findAnomolies(weight);
+
     weight_gain = (weight[(weight.length-1)] - weight[0]);
     total_steps = Math.round(window.sumData[0] * 100) / 100;
     total_cb = Math.round(window.sumData[1] * 100) / 100;
