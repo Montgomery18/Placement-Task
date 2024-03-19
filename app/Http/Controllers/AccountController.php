@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -24,7 +25,7 @@ class AccountController extends Controller
 
         $newAccount->Username= $request->username;
 
-        $newAccount->Password= $request->passw;
+        $newAccount->Password= Hash::make($request->passw);
 
         $newAccount->save();
 
@@ -56,15 +57,14 @@ class AccountController extends Controller
     $username = $request->input('username');
     $password = $request->input('password');
 
-    $query = Account::where('Username', $username)->where('Password', $password)->value("AccountID");
-    session(["AccountID" => $query]);
-   
-    if (isset($query)) {
+    $hashPass = Account::where('Username', $username)->value("Password");
+    
+    if (Hash::check($password, $hashPass)){
+        session(["AccountID" => Account::where('Password', $hashPass)->value("AccountID")]);
         return view("/index");
     }
-    else
-    {
-        return view('/Login');
+    else{
+        return view("/Login");
     }
 }
 }

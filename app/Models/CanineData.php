@@ -33,6 +33,16 @@ class CanineData extends Model
     }
     // THIS GETS THE DOGS A OWNER HAS
 
+    // THIS GETS BEHAVIOUR AND BARKING FREQUENCY VALUES FOR A SPECIFIC DOG
+    public function BehavioursAndBarkFreq($dogID){
+        $Behaviours = DB::table('Canine_Data')->select("Behaviour")->distinct()->where('DogID','=', $dogID)->Get();
+        $BarkingFreq = DB::table('Canine_Data')->select("Barking_Frequency")->distinct()->where('DogID','=', $dogID)->Get();
+        $returnArray[] = $Behaviours;
+        $returnArray[] = $BarkingFreq;
+        return $returnArray;
+    }
+    // THIS GETS BEHAVIOUR AND BARKING FREQUENCY VALUES FOR A SPECIFIC DOG
+    
     // THIS GETS DATA FOR CHARTS
     public function RetrieveDataTrends($DogID, $displayAll, $startDateHour, $endDateHour){
         if ($startDateHour != null && $displayAll == "false"){
@@ -174,7 +184,9 @@ class CanineData extends Model
         $returnArray[] = $arraySumOfDays;
         return($returnArray);
     }
+    // THIS GETS DATA FOR CHARTS
 
+    // THIS GETS AVERAGE DATA PER HOUR FOR ENTIRE TIMEFRAME
     public function RetrieveProfileAverageData($canineDogDataName, $behaviour, $barkFreq){
         $canineData;
         if ($behaviour == "All" && $barkFreq == "All"){ // this data will produces per hour average for entire time frame
@@ -200,12 +212,5 @@ class CanineData extends Model
         $averageCanineData[2] = round($averageCanineData[2] / Count($canineData), 1);
         return $averageCanineData;
     }
-
-    public function BehavioursAndBarkFreq($dogID){
-        $Behaviours = DB::table('Canine_Data')->select("Behaviour")->distinct()->where('DogID','=', $dogID)->Get();
-        $BarkingFreq = DB::table('Canine_Data')->select("Barking_Frequency")->distinct()->where('DogID','=', $dogID)->Get();
-        $returnArray[] = $Behaviours;
-        $returnArray[] = $BarkingFreq;
-        return $returnArray;
-    }
+    // THIS GETS AVERAGE DATA PER HOUR FOR ENTIRE TIMEFRAME
 }

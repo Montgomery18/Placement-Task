@@ -31,12 +31,12 @@ class AnimalDataController extends Controller
                 }
                 $i++;
             }
-            $arrayInsertSub = [
+            $arrayInsertSub = [ // try fix the NormL issue if possible
                 "DogID" => $indivData[0],
                 "Weight" => $indivData[1],
                 "Date" => $date,
                 "Hour" => $indivData[3],
-                "Behaviour" => $indivData[4],
+                "Behaviour" => ucfirst($indivData[4]),
                 "Activity_Level" => $indivData[5],
                 "Heart_Rate" => $indivData[6],
                 "Calorie_Burn" => $indivData[7],
@@ -44,7 +44,7 @@ class AnimalDataController extends Controller
                 "Food_Intake" => $indivData[9],
                 "Water_Intake" => $indivData[10],
                 "Breathing_Rate" => $indivData[11],
-                "Barking_Frequency" => str_replace("\r", "", $indivData[12]) // gets rid of the /r on the end of this piece of data
+                "Barking_Frequency" => ucfirst(str_replace("\r", "", $indivData[12])) // gets rid of the /r on the end of this piece of data
             ];
             $arrayInsert[] = $arrayInsertSub;
             $count = $count + 1;
