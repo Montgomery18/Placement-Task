@@ -48,7 +48,7 @@ Route::get('/Profile', function(){
         $usersDog = $animalCont->GetUsersDogs(session()->get("AccountID"));
         if (session()->get("SelectedDog") !== null){
             $profileData = $animalCont->profileAverage(session()->get("SelectedDog"));
-            $behavAndBark = $animalCont->GetBehaviourAndBark(session()->get("SelectDog"));
+            $behavAndBark = $animalCont->GetBehaviourAndBark(session()->get("SelectedDog"));
             return view('Profile', ["DogID" => $usersDog, "Data" => $profileData, "BehavAndBarkList" => $behavAndBark]);
         }
         else{
