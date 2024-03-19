@@ -38,6 +38,8 @@
             <p>Name: [Insert Dog Name Here]</p>
             <p>Breed: []</p>
             <p>Age: []</p>
+
+            <h2>Show Averages Per Hour</h2>
             <form id="BehaviourAndBarkFrequency" action="{{ route('profileData') }}" method="post">
                 @csrf
                 <input style="display:none" type="text" name="FormType" value="Averages">
@@ -45,16 +47,14 @@
                     <input style="display:none" type="text" name="DogID" value="{{ session()->get('SelectedDog') }}">
                 @elseif (isset($DogID))
                     <input style="display:none" type="text" name="DogID" value="{{ $DogID[0]->DogID }}">
-                @elseif (isset($DogName))
-                    <input style="display:none" type="text" name="DogID" value="{{ $DogName }}">
                 @endif
-                <label for="Behaviour">Select Your Dog</label>
+                <label for="Behaviour">Select Behaviour</label>
                 <select ID="Behaviour" name="Behaviour" form="BehaviourAndBarkFrequency">
                     <option value="All">All</option>
                     <option value="Normal">Normal</option>
                     <option value="Sleeping">Sleeping</option>
                 </select>
-                <label for="BarkingFrequency">Select Your Dog</label>
+                <label for="BarkingFrequency">Select Barking Frequency</label>
                 <select ID="BarkingFrequency" name="BarkingFrequency" form="BehaviourAndBarkFrequency">
                     <option value="All">All</option>
                     <option value="None">None</option>
@@ -67,17 +67,38 @@
         <div class="smallerFlexDisplay">
 
             <section>
+                @if (isset($Behaviour) || isset($BarkingFrequency))
+                    @if ($Behaviour != "All" || $BarkingFrequency != "All")
+                        <h1>When behaviour is {{ $Behaviour }} and barking frequency is {{ $BarkingFrequency }}</h1>
+                    @endif
+                @else
+                    <h1>When behaviour includes All types and barking frequency includes all types</h1>
+                @endif
                 <h1>Average Steps Per Hour:</h1>
                 <!-- Add some sort of circle graph showing Average Steps. -->
                 <p> {{ $Data[0] }}</p>
             </section>
 
             <section>
+                @if (isset($Behaviour) || isset($BarkingFrequency))
+                    @if ($Behaviour != "All" || $BarkingFrequency != "All")
+                        <h1>When behaviour is {{ $Behaviour }} and barking frequency is {{ $BarkingFrequency }}</h1>
+                    @endif
+                @else
+                    <h1>When behaviour includes All types and barking frequency includes all types</h1>
+                @endif
                 <h1>Average Temperture Per Hour:</h1>
                 <p> {{ $Data[1] }}</p>
             </section>
 
             <section>
+                @if (isset($Behaviour) || isset($BarkingFrequency))
+                    @if ($Behaviour != "All" || $BarkingFrequency != "All")
+                        <h1>When behaviour is {{ $Behaviour }} and barking frequency is {{ $BarkingFrequency }}</h1>
+                    @endif
+                @else
+                    <h1>When behaviour includes All types and barking frequency includes all types</h1>
+                @endif
                 <h1>Average BPM Per Hour:</h1>
                 <p> {{ $Data[2] }}</p>
             </section>
@@ -87,6 +108,7 @@
 
     <form id="SelectDog" action="{{ route('profileData') }}" method="post">
         @csrf
+        <input style="display:none" type="text" name="FormType" value="SelectDog">
         <label for="SelectDog">Select Your Dog</label>
         <select ID="Select" name="Select" form="SelectDog">
             @if (isset($DogID))
