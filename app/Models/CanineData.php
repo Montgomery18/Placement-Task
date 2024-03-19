@@ -145,8 +145,6 @@ class CanineData extends Model
             $arraySumOfDays[2] += $tempArray[5];
             $arraySumOfDays[3] += $tempArray[6];
             if ($displayAll == "false"){
-                //$averagedDataObject->CanineID = 
-                //$averagedDataObject->OwnerID = 
                 $averagedDataObject->DogID = $array[$i]->DogName;
                 $averagedDataObject->Date = $array[$i]->Date;
                 $averagedDataObject->Weight = round($tempArray[0] / 24, 1);
@@ -160,8 +158,6 @@ class CanineData extends Model
                 $averageDataArray[] = $averagedDataObject;
             }
             else{
-                //$averagedDataObject->CanineID =
-                //$averagedDataObject->OwnerID =
                 $averagedDataObject->Date = $array[$i]->Date;
                 $averagedDataObject->Weight = round($tempArray[0] / (24 * $distinctNameCount), 1);
                 $averagedDataObject->Activity_Level = round($tempArray[1] / (24 * $distinctNameCount), 1);
@@ -194,19 +190,22 @@ class CanineData extends Model
             $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->where('Behaviour','=', $behaviour)->where('Barking_Frequency',"=", $barkFreq)->get();
         }
         $averageCanineData = [0,0,0];
-        $i = 0; // broke
         foreach ($canineData as $data){
             $averageCanineData[0] += $data->Activity_Level;
-            if ($data->Temperature == null){
-                dd($i);
-            }
             $averageCanineData[1] += $data->Temperature;
             $averageCanineData[2] += $data->Heart_Rate;
-            $i++;
         }
         $averageCanineData[0] = round($averageCanineData[0] / Count($canineData), 1);
         $averageCanineData[1] = round($averageCanineData[1] / Count($canineData), 1);
         $averageCanineData[2] = round($averageCanineData[2] / Count($canineData), 1);
         return $averageCanineData;
+    }
+
+    public function BehavioursAndBarkFreq($dogID){
+        $Behaviours = DB::table('Canine_Data')->select("Behaviour")->distinct()->where('DogID','=', $dogID)->Get();
+        $BarkingFreq = DB::table('Canine_Data')->select("Barking_Frequency")->distinct()->where('DogID','=', $dogID)->Get();
+        $returnArray[] = $Behaviours;
+        $returnArray[] = $BarkingFreq;
+        return $returnArray;
     }
 }

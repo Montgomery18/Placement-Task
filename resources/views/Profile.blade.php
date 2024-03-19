@@ -50,15 +50,15 @@
                 @endif
                 <label for="Behaviour">Select Behaviour</label>
                 <select ID="Behaviour" name="Behaviour" form="BehaviourAndBarkFrequency">
-                    <option value="All">All</option>
-                    <option value="Normal">Normal</option>
-                    <option value="Sleeping">Sleeping</option>
+                    @foreach ($BehavAndBarkList[0] as $behav)
+                        <option value="{{ $behav->Behaviour }}"> {{ $behav->Behaviour }}</option>
+                    @endforeach
                 </select>
                 <label for="BarkingFrequency">Select Barking Frequency</label>
                 <select ID="BarkingFrequency" name="BarkingFrequency" form="BehaviourAndBarkFrequency">
-                    <option value="All">All</option>
-                    <option value="None">None</option>
-                    <option value="Medium">Medium</option>
+                    @foreach ($BehavAndBarkList[1] as $bark)
+                        <option value="{{ $bark->Barking_Frequency }}"> {{ $bark->Barking_Frequency }}</option>
+                    @endforeach
                 </select>
                 <button type="submit">test</button>
             </form>

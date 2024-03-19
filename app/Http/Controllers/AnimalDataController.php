@@ -27,7 +27,7 @@ class AnimalDataController extends Controller
             $i = 0;
             foreach($indivData as $attribute){
                 if ($attribute == null){
-                    $indivData[$i];
+                    $indivData[$i] = 0;
                 }
                 $i++;
             }
@@ -90,28 +90,30 @@ class AnimalDataController extends Controller
             $thisController = new AnimalDataController();
             $canineData = new CanineData();
             $usersDog = $thisController->GetUsersDogs(session()->get("AccountID"));
+            $behavAndBark = $thisController->GetBehaviourAndBark($form->input('Select'));
             $profileData = $canineData->RetrieveProfileAverageData(session()->get("SelectedDog"), "All", "All");
-            return view("/Profile", ["DogID" => $usersDog, "Data" => $profileData]);
+            return view("/Profile", ["DogID" => $usersDog, "Data" => $profileData, "BehavAndBarkList" => $behavAndBark]);
         }
         else if ($form->input('FormType') == "Averages"){
             $thisController = new AnimalDataController();
             $canineData = new CanineData();
             $usersDog = $thisController->GetUsersDogs(session()->get("AccountID"));
-            $average = $canineData->RetrieveProfileAverageData($form->input("DogID"), $form->input("Behaviour"), $form->input("BarkingFrequency")); // Finish later
-            return view("/Profile", ["DogID" => $usersDog, "Data" => $average, "Behaviour" => $form->input("Behaviour"), "BarkingFrequency" => $form->input("BarkingFrequency")]);
+            $behavAndBark = $thisController->GetBehaviourAndBark($form->input("DogID"));
+            $average = $canineData->RetrieveProfileAverageData($form->input("DogID"), $form->input("Behaviour"), $form->input("BarkingFrequency"));
+            return view("/Profile", ["DogID" => $usersDog, "Data" => $average, "Behaviour" => $form->input("Behaviour"), "BarkingFrequency" => $form->input("BarkingFrequency"), "BehavAndBarkList" => $behavAndBark]);
         }
     }
     
     public function DisplayData($DogID, $displayAll, $startDate, $endDate){
         // Don't believe this requires SQLinjection, its the intial display of data
-        $canineData = new canineData;
+        $canineData = new canineData();
         $canineDataRetrieved = $canineData->RetrieveDataTrends($DogID, $displayAll, $startDate, $endDate);
         return $canineDataRetrieved;
     }
 
     public function DisplayDataRangeFiltered(Request $request){
         // write SQLinjection protection here - Might not need due to preselected options on trends
-        $canineData = new canineData;
+        $canineData = new canineData();
         if ($request->input('DateMax') != null){
             $canineDataRetrieved = $canineData->RetrieveDataDateFilteredTrends($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), $request->input('DateMax'));
         }
@@ -121,8 +123,13 @@ class AnimalDataController extends Controller
         return view($request->input('page'), ["data" => $canineDataRetrieved[0], "SummedData" => $canineDataRetrieved[1], "DogID" => $request->input("DogID")]);
     }
 
-    public function profileAverage($DogID){
-        $canineData = new canineData;
-        return $canineData->RetrieveProfileAverageData($DogID, "All", "All");
+    public function profileAverage($dogID){
+        $canineData = new canineData();
+        return $canineData->RetrieveProfileAverageData($dogID, "All", "All");
+    }
+
+    public function GetBehaviourAndBark($dogID){
+        $canineData = new canineData();
+        return $canineData->BehavioursAndBarkFreq($dogID);
     }
 }

@@ -48,24 +48,23 @@ Route::get('/Profile', function(){
         $usersDog = $animalCont->GetUsersDogs(session()->get("AccountID"));
         if (session()->get("SelectedDog") !== null){
             $profileData = $animalCont->profileAverage(session()->get("SelectedDog"));
-            return view('Profile', ["DogID" => $usersDog, "Data" => $profileData]);
+            $behavAndBark = $animalCont->GetBehaviourAndBark(session()->get("SelectDog"));
+            return view('Profile', ["DogID" => $usersDog, "Data" => $profileData, "BehavAndBarkList" => $behavAndBark]);
         }
         else{
             if ($usersDog != null){
                 $profileData = $animalCont->profileAverage($usersDog[0]->DogID);
+                $behavAndBark = $animalCont->GetBehaviourAndBark($usersDog[0]->DogID);
             }
             else{
                 $profileData = null;
             }
-            return view('Profile', ["DogID" => $usersDog, "Data" => $profileData]);
+            return view('Profile', ["DogID" => $usersDog, "Data" => $profileData, "BehavAndBarkList" => $behavAndBark]);
         }
     }
     else{
         return view('/index');
     }
-    
-    //$profileData = $animalCont->profileAverage("CANINE001");
-    //return view('Profile', ["data" => $profileData]);
 });
 
 Route::post('/Profile', [AnimalDataController::class, 'ProfilePageManage'])->name('profileData');
