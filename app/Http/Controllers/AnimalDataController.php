@@ -115,7 +115,7 @@ class AnimalDataController extends Controller
         else{
             $canineDataRetrieved = $canineData->RetrieveDataDateFilteredTrends($request->input('DogID'), $request->input('DisplayAll'), $request->input('DateMin'), null);
         }
-        return view($request->input('page'), ["data" => $canineDataRetrieved, "DogID" => $request->input("DogID")]);
+        return view($request->input('page'), ["data" => $canineDataRetrieved[0], "SummedData" => $canineDataRetrieved[1], "DogID" => $request->input("DogID")]);
     }
 
     public function profileAverage($DogID){

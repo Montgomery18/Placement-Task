@@ -38,14 +38,14 @@ class CanineData extends Model
         if ($startDateHour != null && $displayAll == "false"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->where('DogID','=', $DogID)->whereBetween('Date', [$startDateHour, $endDateHour])->get();
-            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
-            return $canineDataAveraged;
+            $canineDataAveragedAndSum = $thisModel->SumAndAverageData($canineData, $displayAll);
+            return $canineDataAveragedAndSum;
         }
         else if ($startDateHour != null && $displayAll == "true"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->whereBetween('Date', [$startDateHour, $endDateHour])->get();
-            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
-            return $canineDataAveraged;
+            $canineDataAveragedAndSum = $thisModel->SumAndAverageData($canineData, $displayAll);
+            return $canineDataAveragedAndSum;
         }
     }
 
@@ -57,19 +57,20 @@ class CanineData extends Model
         else if ($dateMax != null && $displayAll == "false"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->where('DogID','=', $canineDogDataName)->whereBetween("Date", [$dateMin, $dateMax])->get();
-            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
-            return $canineDataAveraged;
+            $canineDataAveragedAndSum = $thisModel->SumAndAverageData($canineData, $displayAll);
+            return $canineDataAveragedAndSum;
         }
         else if ($dateMax != null && $displayAll == "true"){
             $thisModel = new CanineData();
             $canineData = DB::table('Canine_Data')->whereBetween("Date", [$dateMin, $dateMax])->get();
-            $canineDataAveraged = $thisModel->ChartAverageData($canineData, $displayAll);
-            return $canineDataAveraged;
+            $canineDataAveragedAndSum = $thisModel->SumAndAverageData($canineData, $displayAll);
+            return $canineDataAveragedAndSum;
         }
     }
 
-    public function ChartAverageData($dataToAverage, $displayAll){
+    public function SumAndAverageData($dataToAverage, $displayAll){ // returns average for a day and also sum for the entire timeframe
         $arrayDistinctName = [];
+        $arraySumOfDays = [0,0,0,0];
         $array = [];
         $DogName = "";
         $Date = "";
@@ -130,6 +131,10 @@ class CanineData extends Model
                     }
                 }
             }
+            $arraySumOfDays[0] += $tempArray[1];
+            $arraySumOfDays[1] += $tempArray[3];
+            $arraySumOfDays[2] += $tempArray[5];
+            $arraySumOfDays[3] += $tempArray[6];
             if ($displayAll == "false"){
                 //$averagedDataObject->CanineID = 
                 //$averagedDataObject->OwnerID = 
@@ -160,7 +165,9 @@ class CanineData extends Model
                 $averageDataArray[] = $averagedDataObject;
             }
         }
-        return($averageDataArray);
+        $returnArray[] = $averageDataArray;
+        $returnArray[] = $arraySumOfDays;
+        return($returnArray);
         
         /*
         $averageDataArray = [];

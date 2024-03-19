@@ -76,13 +76,13 @@ Route::get('/Trends', function(){
         $startDate = "2021-01-01";
         $endDate = "2021-01-30";
         if (session()->get("SelectedDog") !== null){
-            $graphData = $animalCont->DisplayData(session()->get("SelectedDog"), "false", $startDate, $endDate);
-            return view('Trends', ["data" => $graphData, "startDate" => $startDate, "endDate" => $endDate]);
+            $returnedData = $animalCont->DisplayData(session()->get("SelectedDog"), "false", $startDate, $endDate);
+            return view('Trends', ["data" => $returnedData[0], "SummedData" => $returnedData[1], "startDate" => $startDate, "endDate" => $endDate]);
         }
         else{
             $usersDog = $animalCont->GetUsersDogs(session()->get("AccountID"));
-            $graphData = $animalCont->DisplayData($usersDog[0]->DogID, "false", $startDate, $endDate);
-            return view('Trends', ["data" => $graphData, "DogID" => $usersDog[0]->DogID, "startDate" => $startDate, "endDate" => $endDate]);
+            $returnedData = $animalCont->DisplayData($usersDog[0]->DogID, "false", $startDate, $endDate);
+            return view('Trends', ["data" => $returnedData[0], "SummedData" => $returnedData[1], "DogID" => $usersDog[0]->DogID, "startDate" => $startDate, "endDate" => $endDate]);
         }
     }
     else{
