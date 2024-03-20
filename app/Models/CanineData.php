@@ -206,10 +206,16 @@ class CanineData extends Model
             $canineData = DB::table('Canine_Data')->select("Activity_Level", "Heart_Rate", "Temperature")->where('DogID','=', $canineDogDataName)->where('Behaviour','=', $behaviour)->where('Barking_Frequency',"=", $barkFreq)->get();
         }
         $averageCanineData = [0,0,0];
+        if ($canineData == null){
+            return $averageCanineData;
+        }
         foreach ($canineData as $data){
             $averageCanineData[0] += $data->Activity_Level;
             $averageCanineData[1] += $data->Temperature;
             $averageCanineData[2] += $data->Heart_Rate;
+        }
+        if ($averageCanineData == [0,0,0]){
+            return $averageCanineData;
         }
         $averageCanineData[0] = round($averageCanineData[0] / Count($canineData), 1);
         $averageCanineData[1] = round($averageCanineData[1] / Count($canineData), 1);
