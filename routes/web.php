@@ -38,6 +38,8 @@ Route::post('/views/delete', [AccountController::class, 'delete'])->name('views.
 
 Route::post('/login', [AccountController::class, 'loginPost'])->name('login1');
 
+Route::post('/ResetPassRequest', [AccountController::class, 'ResetPassPost'])->name('ResetPass1');
+
 Route::get('/ResetPassRequest', function(){
     return view('ResetPassRequest');
 });

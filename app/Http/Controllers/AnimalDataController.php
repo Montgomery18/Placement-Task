@@ -180,8 +180,8 @@ class AnimalDataController extends Controller
         ]);
 
        
-
-       $dataset = Labeled::fromIterator(new CSV('C:\PSP\Activity-Monitor\database\activityData2.csv', true))
+       $path = Storage::disk('local')->path('activityData2.csv');
+       $dataset = Labeled::fromIterator(new CSV($path, true))
         ->apply(new NumericStringConverter());
 
        $estimator = new ClassificationTree(10, 5, 0.001, null, null);
