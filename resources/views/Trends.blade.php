@@ -38,6 +38,7 @@
                         <option value="Calories Consumed">Calories Consumed</option>
                         <option value="Water Consumed">Water Consumed</option>
                         <option value="Breathing Rate">Breathing Rate</option>
+                        <option value="Show All">Show All</option>
                     </select>
                 </div>
                 <div class="col chart-row">
@@ -55,6 +56,7 @@
                         <option value="Calories Consumed">Calories Consumed</option>
                         <option value="Water Consumed">Water Consumed</option>
                         <option value="Breathing Rate">Breathing Rate</option>
+                        <option value="Show All">Show All</option>
                     </select>
                 </div>
             </div>
@@ -127,7 +129,9 @@
                 <p id="cb"></p>
                 <p id="cd"></p>
                 <p id="wc"></p>
-                <p id="weight"></p>
+                <p id="weight"></p><br>
+                <p class="heading">Outliers</p>
+                <p id="warnings"></p>
             </div>
         </section>
         <section>

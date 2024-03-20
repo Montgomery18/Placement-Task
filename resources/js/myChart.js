@@ -32,6 +32,7 @@ function StartChart()
     var total_steps = 0;
     var total_wc = 0;
     var weight_gain = 0;
+    let error_message = "";
 
     //console.log(window.data)
     window.data.forEach(getValues);
@@ -55,7 +56,7 @@ function StartChart()
     }
 
     function findAnomolies(array){
-        let temp_array, q1, q3, iqr, max, min;
+        let temp_array, q1, q3, iqr, max, min, errors = "";
 
         temp_array = array.toSorted();
 
@@ -86,25 +87,21 @@ function StartChart()
 
         for(let i = 0; i < array.length; i+=1){
             if(array[i] < min || array[i] > max){
-                console.log(array[i]);
+                errors += (array[i] + ", ");
             }
         }
+
+        return errors;
     }
 
-    console.log("Steps");
-    findAnomolies(steps);
-    console.log("CC");
-    findAnomolies(cc);
-    console.log("CB");
-    findAnomolies(cb);
-    console.log("WC");
-    findAnomolies(wc);
-    console.log("Temp");
-    findAnomolies(temp);
-    console.log("HR");
-    findAnomolies(hr);
-    console.log("Weight");
-    findAnomolies(weight);
+    error_message += ("Activity Level Outliers: " + findAnomolies(steps) + "<br>");
+    error_message += ("Calories Consumed Outliers: " + findAnomolies(cc) + "<br>");
+    error_message += ("Calories Burned Outliers: " + findAnomolies(cb) + "<br>");
+    error_message += ("Water Consumed Outliers: " + findAnomolies(wc) + "<br>");
+    error_message += ("Temperature Outliers: " + findAnomolies(temp) + "<br>");
+    error_message += ("Heart Rate Outliers: " + findAnomolies(hr) + "<br>");
+    error_message += ("Weight Outliers: " + findAnomolies(weight) + "<br>");
+    error_message += ("Breathing Rate Outliers: " + findAnomolies(br) + "<br>");
 
     weight_gain = (weight[(weight.length-1)] - weight[0]);
     total_steps = Math.round(window.sumData[0] * 100) / 100;
@@ -112,26 +109,21 @@ function StartChart()
     total_cc = Math.round(window.sumData[2] * 100) / 100;
     total_wc = Math.round(window.sumData[3] * 100) / 100;
 
-    //console.log(dates);
-    //console.log(values)
-    /*console.log("Total Steps is " + total_steps)
-    console.log("Total Calories Eaten is " + total_cc)
-    console.log("Total Calories Burned is " + total_cb)
-    console.log("Calorie Deficit is " + (total_cc - total_cb))
-    console.log("Total Water Consummed is " + total_wc)*/
-
     var Chart1Set = {
         type: "line",
         data: {
             labels: dates,
             datasets: [{
-            borderColor: "blue",
-            backgroundColor: "",
-            data: steps
+                label: "Steps",
+                borderColor: "blue",
+                backgroundColor: "",
+                data: steps
             }]
         },
         options: {
-            legend: {display: false},
+            legend: {
+                display: true,
+            },
             title: {
                 display: true,
                 text: "Steps"
@@ -158,13 +150,14 @@ function StartChart()
         data: {
             labels: dates,
             datasets: [{
-            borderColor: "red",
-            backgroundColor: "",
-            data: hr
+                label: "Heart Rate",
+                borderColor: "red",
+                backgroundColor: "",
+                data: hr
             }]
         },
         options: {
-            legend: {display: false},
+            legend: {display: true},
             title: {
                 display: true,
                 text: "Heart Rate"
@@ -240,46 +233,111 @@ function StartChart()
         myChart.options.title.text = chart1_select.value;
         switch(chart1_select.value){
             case "Weight":
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = weight;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: weight,
+                    label: "Weight(kg)"
                 })
                 break;
             case "Steps":
-                //console.log(steps);
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = steps;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: steps,
+                    label: "Steps"
                 })
                 break;
             case "Heart Rate":
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = hr;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: hr,
+                    label: "Heart Rate(bpm)"
                 })
                 break;
             case "Calories Burned":
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = cb;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: cb,
+                    label: "Calories Burned(cal)"
                 })
                 break;
             case "Temperature":
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = temp;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: temp,
+                    label: "Temperature(C)"
                 })
                 break;
             case "Calories Consumed":
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = cc;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: cc,
+                    label: "Calories Eaten(cal)"
                 })
                 break;
             case "Water Consumed":
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = wc;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: wc,
+                    label: "Water Drank(ml)"
                 })
                 break;
             case "Breathing Rate":
-                myChart.data.datasets.forEach((dataset) => {
-                    dataset.data = br;
+                myChart.data.datasets = [];
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: br,
+                    label: "Breathing Rate(bpm)"
                 })
                 break;
+            case "Show All":
+                myChart.data.datasets.pop();
+                myChart.data.datasets.push({
+                    borderColor: "rgba(0, 255, 223, 0.8)",
+                    data: steps,
+                    label: "Steps"
+                })
+                myChart.data.datasets.push({
+                    borderColor: "rgba(255, 42, 126, 0.8)",
+                    data: weight,
+                    label: "Weight(kg)"
+                })
+                myChart.data.datasets.push({
+                    borderColor: "red",
+                    data: hr,
+                    label: "Heart Rate(bpm)"
+                })
+                myChart.data.datasets.push({
+                    borderColor: "green",
+                    data: br,
+                    label: "Breathing Rate(bpm)"
+                })
+                myChart.data.datasets.push({
+                    borderColor: "yellow",
+                    data: temp,
+                    label: "Temperature(C)"
+                })
+                myChart.data.datasets.push({
+                    borderColor: "rgba(203, 0, 255, 0.8)",
+                    data: cc,
+                    label: "Calories Eaten(cal)"
+                })
+                myChart.data.datasets.push({
+                    borderColor: "rgba(229, 84, 255, 1)",
+                    data: cb,
+                    label: "Calories Burned(cal)"
+                })
+                myChart.data.datasets.push({
+                    borderColor: "blue",
+                    data: wc,
+                    label: "Water Drank(ml)"
+                })
             default:
                 break;
         }
@@ -287,50 +345,114 @@ function StartChart()
     })
 
     chart2_select.addEventListener('change', function(){
-        //console.log(chart2_select.value);
         myChart2.options.title.text = chart2_select.value;
         switch(chart2_select.value){
             case "Weight":
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = weight;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: weight,
+                    label: "Weight(kg)"
                 })
                 break;
             case "Steps":
-                //console.log(steps);
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = steps;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: steps,
+                    label: "Steps"
                 })
                 break;
             case "Heart Rate":
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = hr;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: hr,
+                    label: "Heart Rate(bpm)"
                 })
                 break;
             case "Calories Burned":
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = cb;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: cb,
+                    label: "Calories Burned(cal)"
                 })
                 break;
             case "Temperature":
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = temp;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: temp,
+                    label: "Temperature(C)"
                 })
                 break;
             case "Calories Consumed":
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = cc;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: cc,
+                    label: "Calories Eaten(cal)"
                 })
                 break;
             case "Water Consumed":
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = wc;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: wc,
+                    label: "Water Drank(ml)"
                 })
                 break;
             case "Breathing Rate":
-                myChart2.data.datasets.forEach((dataset) => {
-                    dataset.data = br;
+                myChart2.data.datasets = [];
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: br,
+                    label: "Breathing Rate(bpm)"
                 })
                 break;
+            case "Show All":
+                myChart2.data.datasets.pop();
+                myChart2.data.datasets.push({
+                    borderColor: "red",
+                    data: steps,
+                    label: "Steps"
+                })
+                myChart2.data.datasets.push({
+                    borderColor: "orange",
+                    data: weight,
+                    label: "Weight(kg)"
+                })
+                myChart2.data.datasets.push({
+                    borderColor: "yellow",
+                    data: hr,
+                    label: "Heart Rate(bpm)"
+                })
+                myChart2.data.datasets.push({
+                    borderColor: "green",
+                    data: br,
+                    label: "Breathing Rate(bpm)"
+                })
+                myChart2.data.datasets.push({
+                    borderColor: "blue",
+                    data: temp,
+                    label: "Temperature(C)"
+                })
+                myChart2.data.datasets.push({
+                    borderColor: "purple",
+                    data: cc,
+                    label: "Calories Eaten(cal)"
+                })
+                myChart2.data.datasets.push({
+                    borderColor: "pink",
+                    data: cb,
+                    label: "Calories Burned(cal)"
+                })
+                myChart2.data.datasets.push({
+                    borderColor: "black",
+                    data: wc,
+                    label: "Water Drank(ml)"
+                })
             default:
                 break;
         }
@@ -368,7 +490,8 @@ function StartChart()
     document.getElementById('steps').innerHTML = ("Total Steps: " + total_steps);
     document.getElementById('cc').innerHTML = ("Total Calories Eaten: " + total_cc);
     document.getElementById('cb').innerHTML = ("Total Calories Burned: " + total_cb);
-    document.getElementById('cd').innerHTML = ("Calorie Difference: " + (total_cc - total_cb));
+    document.getElementById('cd').innerHTML = ("Calorie Difference: " + (Math.round(total_cc - total_cb*100)/100));
     document.getElementById('wc').innerHTML = ("Water Drank: " + total_wc);
-    document.getElementById('weight').innerHTML = ("Your Dog Gained " + weight_gain + "kg");
+    document.getElementById('weight').innerHTML = ("Your Dog Gained " + (Math.round(weight_gain *100)/100) + "kg");
+    document.getElementById('warnings').innerHTML = error_message;
 }
