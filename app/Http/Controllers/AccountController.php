@@ -6,9 +6,12 @@ use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class AccountController extends Controller
 {
+   
+    
     public function Test(){
         $account = Account::all();
         dd($account);
@@ -16,7 +19,7 @@ class AccountController extends Controller
 
      public function Register()
     {
-        return view('views.Register');
+        return view('/index');
     }
 
     public function add(Request $request){
@@ -42,10 +45,11 @@ class AccountController extends Controller
            $user->delete($user);
            return view ('/index');
         } else {
-            echo ("no work");
+            return view('/AdminDeleteUser');
         }
  
    }
+
    public function login()
     {
         return view('/index');
@@ -66,5 +70,28 @@ class AccountController extends Controller
     else{
         return view("/Login");
     }
+    }
+    public function ResetPassRequest()
+    {
+        return view('/index');
+    }
+
+   public function ResetPassPost(Request $request)
+    {
+        $session_id=session()->get("AccountID");
+
+        $row= Account::find($session_id);
+
+       if ($row) {
+        $row->Password = Hash::make($request->passw);
+        $row->save();
+         return view('/index');
+    } else {
+        echo ("no work");
+       
+    }
+       
+    }
+
 }
-}
+

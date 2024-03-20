@@ -15,15 +15,14 @@
     <p>Enter a new password for '@example.gmail.com' </p>
     <main class="bg-image bg">
     <section class="form-group float-right">
-            <form class="form was-validated form-container" action="" method="post">
+            <form class="form was-validated form-container" action="{{route('ResetPass1')}}" method="post">
+                @csrf
                 <div>
-                    <input class="form-control" type="text" id="new_pass" name="new_pass" placeholder="New Password" required>
+                    <label for="passw" class="form_text">Password</label><br>
+                    <input class="form-control" type="password" id="passw" name="passw" placeholder="********" required>
                     <div class="invalid-feedback">Please fill out this field.</div>
                     <br>
-                    <input class="form-control" type="text" id="confirm_pass" name="confirm_pass" placeholder="Confirm Password" required>
-                    <div class="invalid-feedback">Please fill out this field.</div>
-                    <br>
-                    <input class="btn form_button" type="submit" value="Reset Password">
+                    <input class="btn form_button" type="submit" value="Enter">
                 </div>
             </form>
     </main>
