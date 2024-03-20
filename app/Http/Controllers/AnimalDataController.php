@@ -26,10 +26,15 @@ use Rubix\ML\Clusterers\KMeans;
 
 class AnimalDataController extends Controller
 {
-    public function FileDBWrite(){
+    public function FileDBWrite(Request $request){
         $fileData = Storage::get('activityData.csv');
         $fileDataArray = explode("\n", $fileData);
-        array_splice($fileDataArray, 0, 1);
+        if ($request->input('type') == "different" && $request->input('HasColumns') == "true"){
+            array_splice($fileDataArray, $request->input('ColumnStart'), $request->input('ColumnEnd'));
+        }
+        else{
+            array_splice($fileDataArray, 0, 1);
+        }
         $canineData = new CanineData;
         $arrayInsert = [];
         $count = 0;
@@ -40,8 +45,17 @@ class AnimalDataController extends Controller
                 $count = 0;
             }
             $indivData = explode(",", $indivData);
-            $dateArray = explode("-", $indivData[2]);
-            $date = ($dateArray[2] . "-" . $dateArray[1] . "-" . $dateArray[0]);
+            if ($count == 2){
+                dd($indivData);
+            }
+            if ($request->input('type') == "different"){
+                $dateArray = explode("-", $indivData[$request->input('Date')]);
+                $date = ($dateArray[2] . "-" . $dateArray[1] . "-" . $dateArray[0]); // error caused here
+            }
+            else{
+                $dateArray = explode("-", $indivData[2]);
+                $date = ($dateArray[2] . "-" . $dateArray[1] . "-" . $dateArray[0]);
+            }
             $i = 0;
             foreach($indivData as $attribute){
                 if ($attribute == null){
@@ -49,45 +63,46 @@ class AnimalDataController extends Controller
                 }
                 $i++;
             }
-            $arrayInsertSub = [ // try fix the NormL issue if possible
-                "DogID" => $indivData[0],
-                "Weight" => $indivData[1],
-                "Date" => $date,
-                "Hour" => $indivData[3],
-                "Behaviour" => ucfirst($indivData[4]),
-                "Activity_Level" => $indivData[5],
-                "Heart_Rate" => $indivData[6],
-                "Calorie_Burn" => $indivData[7],
-                "Temperature" => $indivData[8],
-                "Food_Intake" => $indivData[9],
-                "Water_Intake" => $indivData[10],
-                "Breathing_Rate" => $indivData[11],
-                "Barking_Frequency" => ucfirst(str_replace("\r", "", $indivData[12])) // gets rid of the /r on the end of this piece of data
-            ];
-            $arrayInsert[] = $arrayInsertSub;
-            $count = $count + 1;
-        }
 
-        /* - Eloquent method - to slow
-        foreach($fileDataArray as $indivData){
-            $canineData = new CanineData;
-            $indivData = explode(",", $indivData);
-            $canineData->DogID = $indivData[0];
-            $canineData->Weight = $indivData[1];
-            $canineData->Date = $indivData[2];
-            $canineData->Hour = $indivData[3];
-            $canineData->Behaviour = $indivData[4];
-            $canineData->Activity_Level = $indivData[5];
-            $canineData->Heart_Rate = $indivData[6];
-            $canineData->Calorie_Burn = $indivData[7];
-            $canineData->Temperature = $indivData[8];
-            $canineData->Food_Intake = $indivData[9];
-            $canineData->Water_Intake = $indivData[10];
-            $canineData->Breathing_Rate = $indivData[11];
-            $canineData->Barking_Frequency = $indivData[12];
-            $canineData->save();
+            if ($request->input('type') == "different"){
+                $arrayInsertSub = [ // try fix the NormL issue if possible
+                    "DogID" => $indivData[$request->input('DogID')],
+                    "Weight" => $indivData[$request->input('Weight')],
+                    "Date" => $date,
+                    "Hour" => $indivData[$request->input('Hour')],
+                    "Behaviour" => ucfirst($indivData[$request->input('Behaviour')]),
+                    "Activity_Level" => $indivData[$request->input('ActivityLevel')],
+                    "Heart_Rate" => $indivData[$request->input('HeartRate')],
+                    "Calorie_Burn" => $indivData[$request->input('CalorieBurn')],
+                    "Temperature" => $indivData[$request->input('Temperature')],
+                    "Food_Intake" => $indivData[$request->input('FoodIntake')],
+                    "Water_Intake" => $indivData[$request->input('WaterIntake')],
+                    "Breathing_Rate" => $indivData[$request->input('BreathingRate')],
+                    "Barking_Frequency" => ucfirst(str_replace("\r", "", $indivData[$request->input('BarkingFrequency')])) // gets rid of the /r on the end of this piece of data
+                ];
+                $arrayInsert[] = $arrayInsertSub;
+                $count = $count + 1;
+            }
+            else{
+                $arrayInsertSub = [ 
+                    "DogID" => $indivData[0],
+                    "Weight" => $indivData[1],
+                    "Date" => $date,
+                    "Hour" => $indivData[3],
+                    "Behaviour" => ucfirst($indivData[4]),
+                    "Activity_Level" => $indivData[5],
+                    "Heart_Rate" => $indivData[6],
+                    "Calorie_Burn" => $indivData[7],
+                    "Temperature" => $indivData[8],
+                    "Food_Intake" => $indivData[9],
+                    "Water_Intake" => $indivData[10],
+                    "Breathing_Rate" => $indivData[11],
+                    "Barking_Frequency" => ucfirst(str_replace("\r", "", $indivData[12]))
+                ];
+                $arrayInsert[] = $arrayInsertSub;
+                $count = $count + 1;
+            }
         }
-        */
     }
 
     public function GetUsersDogs($ownerID){
@@ -151,11 +166,31 @@ class AnimalDataController extends Controller
         return $canineData->BehavioursAndBarkFreq($dogID);
     }
 
-    public function RegenerateDataFromCSV(){
+    public function AdminHandler(Request $request){
+        $thisController = new AnimalDataController();
+        if ($request->input('type') == "regular"){
+            $thisController->RegenerateDataFromCSV($request);
+        }
+        else if ($request->input('type') == "different"){
+            $thisController->RegenerateDataFromIrregularCSV($request);
+        }
+        return view("/admin");
+    }
+
+
+    public function RegenerateDataFromCSV(Request $request){
         $thisController = new AnimalDataController();
         $canineData = new CanineData();
         $canineData->DeleteDataDB();
-        $thisController->FileDBWrite();
+        $thisController->FileDBWrite($request);
+        return view('/Admin');
+    }
+
+    public function RegenerateDataFromIrregularCSV(Request $request){
+        $thisController = new AnimalDataController();
+        $canineData = new CanineData();
+        $canineData->DeleteDataDB();
+        $thisController->FileDBWrite($request);
         return view('/Admin');
     }
 

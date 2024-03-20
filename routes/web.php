@@ -97,7 +97,7 @@ Route::get('/Admin', function(){
     return view('Admin');
 });
 
-Route::post('/Admin', [AnimalDataController::class, 'RegenerateDataFromCSV'])->name('RegenData');
+Route::post('/Admin', [AnimalDataController::class, 'AdminHandler'])->name('AdminHandler');
 
 Route::get('/ContactUs', function(){
     return view('ContactUs');
