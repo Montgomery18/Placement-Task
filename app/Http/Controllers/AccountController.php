@@ -25,6 +25,14 @@ class AccountController extends Controller
     public function add(Request $request){
 
         $newAccount= new Account;
+        foreach (Account::all() as $existing){
+            if ($request->username == $existing[0]){
+                return view("/Register", ["error" => "username or password exists"]);
+            }
+            else if ($request->password == $existing[1]){
+                return view("/Register", ["error" => "username or password exists"]);
+            }
+        }
 
         $newAccount->Username= $request->username;
 

@@ -11,11 +11,8 @@
 </head>
 <body>
 
-    
     @include("Header")
 
-
-    
     <main class="bg-image bg">
         <section class="form-group float-right">
             <form class="form was-validated" action="{{route('views.add')}}" method="post">
@@ -31,17 +28,15 @@
                     <br>
                     <input class="btn form_button" type="submit" value="Enter">
                 </div>
+                @if (isset($error))
+                    <p>{{ $error }}</p>
+                @endif
             </form>
         </section>
-        <section>
-
-        </section>
     </main>
-  
-    
+
      <footer>
      @include ("Footer")
-
     </footer>
     
 </body>
